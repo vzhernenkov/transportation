@@ -101,6 +101,7 @@ h1, h2, h3, p, ul {
   justify-content: space-between;
   align-items: center;
   height: 90vh;
+  padding-top: 20px;
 }
 
 .hero__item {
@@ -131,4 +132,24 @@ h1, h2, h3, p, ul {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
+}
+
+.footer {
+  background-color: #E70000;
+  height: 100%;
+  padding: 20px 0px;
+}
+
+.footer__logo-text {
+  font-size: 30px;
+  font-weight: 500;
+  color: white;
+}
+
+.footer__logo-round {
+  display: inline-block;
+  background-color: white;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
 }
