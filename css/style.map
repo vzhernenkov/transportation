@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "style.css",
+	"sources": [
+		"../sass/style.sass"
+	],
+	"sourcesContent": [
+		"@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');\n\nhtml {\n    box-sizing: border-box; }\n\n*,\n*::before,\n*::after {\n    box-sizing: inherit; }\n\nbody {\n    min-width: 320px;\n    margin: 0;\n    font-family: Poppins, sans-serif;\n    font-weight: 400px;\n    line-height: 1;\n    background-color: #f7f7f7;\n    color: #333333; }\n\na {\n    text-decoration: none;\n    color: inherit; }\n\nul {\n  list-style: none;\n  padding: 0;\n  margin: 0; }\n\n\nbutton, input {\n  font: inherit; }\n\n\nh1, h2, h3, p, ul {\n    padding: 0;\n    margin: 0; }\n\n\n.container {\n  padding-left: 75px;\n  padding-right: 75px;\n  max-width: 1920px;\n  margin: auto; }\n\n\n.visually-hidden {\n  position: absolute !important;\n  clip: rect(1px, 1px, 1px, 1px);\n  padding: 0 !important;\n  border: 0 !important;\n  height: 1px !important;\n  width: 1px !important;\n  overflow: hidden; }\n\n\n"
+	],
+	"names": [],
+	"mappings": "AAAA,OAAO,CAAC,qFAAI;;AAEZ,AAAA,IAAI,CAAC;EACD,UAAU,EAAE,UAAU;CAAG;;;AAE7B,AAAA,CAAC;AACD,CAAC,AAAA,QAAQ;AACT,CAAC,AAAA,OAAO,CAAC;EACL,UAAU,EAAE,OAAO;CAAG;;;AAE1B,AAAA,IAAI,CAAC;EACD,SAAS,EAAE,KAAK;EAChB,MAAM,EAAE,CAAC;EACT,WAAW,EAAE,mBAAmB;EAChC,WAAW,EAAE,KAAK;EAClB,WAAW,EAAE,CAAC;EACd,gBAAgB,EAAE,OAAO;EACzB,KAAK,EAAE,OAAO;CAAG;;;AAErB,AAAA,CAAC,CAAC;EACE,eAAe,EAAE,IAAI;EACrB,KAAK,EAAE,OAAO;CAAG;;;AAErB,AAAA,EAAE,CAAC;EACD,UAAU,EAAE,IAAI;EAChB,OAAO,EAAE,CAAC;EACV,MAAM,EAAE,CAAC;CAAG;;;AAGd,AAAA,MAAM,EAAE,KAAK,CAAC;EACZ,IAAI,EAAE,OAAO;CAAG;;;AAGlB,AAAA,EAAE,EAAE,EAAE,EAAE,EAAE,EAAE,CAAC,EAAE,EAAE,CAAC;EACd,OAAO,EAAE,CAAC;EACV,MAAM,EAAE,CAAC;CAAG;;;AAGhB,AAAA,UAAU,CAAC;EACT,YAAY,EAAE,IAAI;EAClB,aAAa,EAAE,IAAI;EACnB,SAAS,EAAE,MAAM;EACjB,MAAM,EAAE,IAAI;CAAG;;;AAGjB,AAAA,gBAAgB,CAAC;EACf,QAAQ,EAAE,mBAAmB;EAC7B,IAAI,EAAE,wBAAwB;EAC9B,OAAO,EAAE,YAAY;EACrB,MAAM,EAAE,YAAY;EACpB,MAAM,EAAE,cAAc;EACtB,KAAK,EAAE,cAAc;EACrB,QAAQ,EAAE,MAAM;CAAG"
+}
