@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300400500&display=swap");
 html {
   box-sizing: border-box;
 }
@@ -54,4 +54,28 @@ h1, h2, h3, p, ul {
   height: 1px !important;
   width: 1px !important;
   overflow: hidden;
+}
+
+.header {
+  border-bottom: 1px solid black;
+  padding: 20px 0px;
+}
+
+.header__nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.header__login-buttons-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 150px;
+}
+
+.header__logo {
+  font-size: 30px;
+  font-weight: 500;
 }
