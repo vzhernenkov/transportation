@@ -153,3 +153,44 @@ h1, h2, h3, p, ul {
   height: 15px;
   border-radius: 50%;
 }
+
+.form-header {
+  font-size: 40px;
+  margin-bottom: 30px;
+}
+
+.hero__form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.form__input {
+  border: 1px solid #E70000;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.form__button {
+  border: 1px solid #E70000;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 15px;
+  background-color: #E70000;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.header__logo-round_login-edition {
+  width: 8px;
+  height: 8px;
+  background: white;
+  translate: 2px 1px;
+}
+
+.hero__go-to-register {
+  font-size: 10px;
+  text-align: center;
+}

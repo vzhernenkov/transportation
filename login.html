@@ -18,14 +18,6 @@
               <span class="header__logo-text">SPOT</span>
               <span class="header__logo-round"></span>
             </a>
-            <div class="header__login-buttons-group">
-              <div class="header__item">
-                <a href="login.html" class="header__login-button">Sign in</a>
-              </div>
-              <div class="header__item">
-                <a href="register.html" class="header__login-button">Sign up</a>
-              </div>
-            </div>
           </nav>
         </div>
       </header>
@@ -34,11 +26,14 @@
         <section class="hero">
           <div class="hero__container container">
             <div class="hero__item">
-              <h3 class="hero__text">Easy to learn, easy to master transport managing system</h3>
-              <div class="hero__text-small">
-                This pet project was built by Zhernenkov Vasiliy.<br>The main aim of the project is to simplify fleet management and allow transport companies to take orders faster. 
-              </div>
-              <a href="login.html" class="header__login-button">Sign in</a>
+              <h2 class="form-header">Log in</h2>
+              <form action="#" method="post" class="hero__form">
+                <input class="form__input" type="email" placeholder="Email" id="email">
+                <input class="form__input" type="password" placeholder="Password" id="password">
+                <input class="form__input" type="text" placeholder="Company name" id="company">
+                <button class="form__button" type="submit">Go to the SPOT<span class="header__logo-round header__logo-round_login-edition"></span></button>
+                <a href="register.html" class="hero__go-to-register">I dont have an account</a>
+              </form>
             </div>
             <div class="hero__item hero__image">
               <div class="image"></div>
