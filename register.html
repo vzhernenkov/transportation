@@ -28,11 +28,39 @@
             <div class="hero__item">
               <h2 class="form-header">Create new account</h2>
               <form action="#" method="post" class="hero__form">
-                <input class="form__input" type="text" placeholder="Name" id="name">
-                <input class="form__input" type="tel" placeholder="Phone" id="phone">
-                <input class="form__input" type="email" placeholder="Email" id="email">
-                <input class="form__input" type="text" placeholder="Company name" id="company">
-                <button class="form__button" type="submit">Join to the SPOT<span class="header__logo-round header__logo-round_login-edition"></span></button>
+
+                <div class="form__group">
+                  <label class="form__error-label label-for-name" for="name"></label>
+                  <input required class="form__input" type="text" placeholder="Name" id="name">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__error-label label-for-tel" for="phone"></label>
+                  <input required class="form__input" type="tel" placeholder="Phone" id="phone">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__error-label label-for-email" for="email"></label>
+                  <input required class="form__input" type="email" placeholder="Email" id="email">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__error-label label-for-password" for="name"></label>
+                  <input required class="form__input" type="password" placeholder="Password" id="password">
+                </div>
+
+                <div class="form__group">
+                  <input required class="form__input" type="text" placeholder="Company name" id="company">
+                </div>
+                <a href="#" class="form__button" id="register">Join to the SPOT<span class="header__logo-round header__logo-round_login-edition"></span></a>
+                <a href="login.html" class="hero__go-to-register">I have an account</a>
+                <div class="form__password-block">
+                  <span class="password__header">Password should contain:</span>
+                  <span class="password__message length">- 8 or more characters</span>
+                  <span class="password__message symbols">- One of special symbol "#,!,%,*,@"</span>
+                  <span class="password__message big-letter">- One letter in uppercase</span>
+                  <span class="password__message number">- At least one number</span>
+                </div>
               </form>
             
             
