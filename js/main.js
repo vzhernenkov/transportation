@@ -2,7 +2,7 @@
 
 //CONSTANTS
 
-const FORM_BUTTON = document.querySelector('.form__button');
+const FORM_BUTTON = document.querySelector('.form__button') || 0;
 
 
 // VARIABLES
@@ -26,26 +26,27 @@ function validate (e) {
   e.preventDefault();
   
   let email = document.getElementById('email').value,
-      password = document.getElementById('password').value,
-      company = document.getElementById('company').value;
+      password = document.getElementById('password').value;
   
   if (e.target.id == 'register') {
     let name = document.getElementById('name').value,
         tel = document.getElementById('phone').value;
-
     
-    if (validateName(name) || validateEmail(email) || validatePhone(tel) || passwordStopper) {
+    if (validateName(name) && validateEmail(email) && validatePhone(tel) && passwordStopper) {
       window.location.href = 'index.html';
     }
   } else {
     let admin = {
-      email: 'admin@gmail.com',
-      password: 'Admin123!',
-      company: 'Admin'
-    };
-  
-    if (email == admin.email && password == admin.password && companyName == admin.company) return true;
-  };
+      email: "admin@gmail.com",
+      password: "admin"
+    }
+
+    if (password == admin.password && email == admin.email) {
+      window.location.href = 'index.html';
+    } else {
+
+    }
+  }
   
   
 };
@@ -147,7 +148,7 @@ function validatePassword (e) {
   }
 
   if (counter > 0) {
-    FORM_BUTTON.preventDefault();
+    passwordStopper = 0;
   } else {
     passwordStopper = 1;
   }
