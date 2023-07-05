@@ -7,14 +7,9 @@ const FORM_BUTTON = document.querySelector('.form__button');
 
 // VARIABLES
 
-let admin = {
-  email: 'admin@gmail.com',
-  password: 'Admin123!',
-  company: 'Admin'
-};
-
 let numbers = '01234567890',
     symbols = '!#@$%^&*()_-+=§<>?/,.\|';
+    passwordStopper = 0;
 
 // LISTENERS
 
@@ -28,7 +23,6 @@ FORM_BUTTON.addEventListener('click', validate);
 document.getElementById('password').addEventListener('input', validatePassword);
 
 function validate (e) {
-
   e.preventDefault();
   
   let email = document.getElementById('email').value,
@@ -38,11 +32,19 @@ function validate (e) {
   if (e.target.id == 'register') {
     let name = document.getElementById('name').value,
         tel = document.getElementById('phone').value;
+
     
-    validateName(name);
-    validateEmail(email);
-    validatePhone(tel);
-    
+    if (validateName(name) || validateEmail(email) || validatePhone(tel) || passwordStopper) {
+      window.location.href = 'index.html';
+    }
+  } else {
+    let admin = {
+      email: 'admin@gmail.com',
+      password: 'Admin123!',
+      company: 'Admin'
+    };
+  
+    if (email == admin.email && password == admin.password && companyName == admin.company) return true;
   };
   
   
@@ -52,7 +54,6 @@ function validateName (name) {
   let errors = '';
   const ERROR_LABEL = document.querySelector('.label-for-name');
 
-  if (name.toLowerCase() == name) errors += 'Name should contains at least one capital letter. ';
   if (name.split('').filter(e => numbers.includes(e) || symbols.includes(e)).length > 0) errors += "Name shouldn't contains any number or symbol. ";
   if (name.length <= 2) errors += "Length shoud be more than 2 letters. "
 
@@ -145,10 +146,17 @@ function validatePassword (e) {
     number.style.color = 'black';
   }
 
+  if (counter > 0) {
+    FORM_BUTTON.preventDefault();
+  } else {
+    passwordStopper = 1;
+  }
 };
 
 function loginUser (email, password, companyName) {
 
+
+  return false;
 }
  
 })();
