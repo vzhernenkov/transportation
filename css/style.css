@@ -72,7 +72,6 @@ h1, h2, h3, p, ul {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  min-width: 200px;
 }
 
 .header__logo-text {
@@ -82,7 +81,7 @@ h1, h2, h3, p, ul {
 
 .header__logo-round {
   display: inline-block;
-  background-color: red;
+  background-color: #1A65DE;
   width: 15px;
   height: 15px;
   border-radius: 50%;
@@ -90,7 +89,7 @@ h1, h2, h3, p, ul {
 
 .header__login-button {
   display: inline-block;
-  border: 1px solid red;
+  border: 1px solid #1A65DE;
   padding: 10px 20px;
   border-radius: 10px;
 }
@@ -109,7 +108,7 @@ h1, h2, h3, p, ul {
 }
 
 .hero__button {
-  background: #E70000;
+  background: #1A65DE;
   color: white;
   font-size: 20px;
 }
@@ -141,7 +140,7 @@ h1, h2, h3, p, ul {
 }
 
 .footer {
-  background-color: #E70000;
+  background-color: #1A65DE;
   height: 100%;
   padding: 20px 0px;
 }
@@ -186,11 +185,11 @@ h1, h2, h3, p, ul {
 
 .form__button {
   text-align: center;
-  border: 1px solid #E70000;
+  border: 1px solid #1A65DE;
   padding: 10px 15px;
   border-radius: 10px;
   font-size: 15px;
-  background-color: #E70000;
+  background-color: #1A65DE;
   color: white;
   margin-bottom: 10px;
 }
@@ -235,7 +234,7 @@ h1, h2, h3, p, ul {
   bottom: -10px;
   left: 15px;
   font-size: 10px;
-  color: #E70000;
+  color: #1A65DE;
 }
 
 .transport__main {
@@ -254,7 +253,7 @@ h1, h2, h3, p, ul {
 
 .add__block {
   width: 30%;
-  border-right: 1px solid #E70000;
+  border-right: 1px solid #1A65DE;
 }
 
 .list__block {
@@ -271,7 +270,7 @@ h1, h2, h3, p, ul {
 }
 
 .transport__header {
-  border-bottom: 1px solid #E70000;
+  border-bottom: 1px solid #1A65DE;
 }
 
 .form__input_transport {
@@ -283,7 +282,7 @@ h1, h2, h3, p, ul {
 }
 
 .transport__item {
-  border: 1px solid #E70000;
+  border: 1px solid #1A65DE;
   border-radius: 20px;
   margin-bottom: 20px;
 }
@@ -295,7 +294,7 @@ h1, h2, h3, p, ul {
   position: relative;
   display: flex;
   flex-direction: row;
-  background-color: #E70000;
+  background-color: #1A65DE;
 }
 
 .transport__logo {
@@ -305,7 +304,7 @@ h1, h2, h3, p, ul {
   width: 80px;
   height: 80px;
   border-radius: 15px;
-  border: 1px solid #E70000;
+  border: 1px solid #1A65DE;
 }
 
 .transport__driver {
