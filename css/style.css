@@ -254,6 +254,7 @@ h1, h2, h3, p, ul {
 .add__block {
   width: 30%;
   border-right: 1px solid #1A65DE;
+  padding-left: 0px;
 }
 
 .list__block {
@@ -271,10 +272,6 @@ h1, h2, h3, p, ul {
 
 .transport__header {
   border-bottom: 1px solid #1A65DE;
-}
-
-.form__input_transport {
-  margin-bottom: 20px;
 }
 
 .transport__add {
@@ -329,4 +326,14 @@ h1, h2, h3, p, ul {
 
 .info {
   font-weight: normal;
+}
+
+.transport__type-block {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.form__radio {
+  transform: translateY(-2px);
 }

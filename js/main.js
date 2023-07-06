@@ -1,45 +1,127 @@
 (() => {
 
-console.log(document.title)
-
-// LOGIN & REGISTRATION
-
-if (document.title == "Login" || document.title == "Register") {
-
-//CONSTANTS
-
-const FORM_BUTTON = document.querySelector('.form__button');
-
-console.log('hel')
-
-// VARIABLES
+//GlOBAL VARIABLES
 
 let numbers = '01234567890',
     symbols = '!#@$%^&*()_-+=§<>?/,.\|';
     passwordStopper = 0;
 
-// LISTENERS
+let driverList = [{
+      truckName: "Eagle1",
+      truckDriver: "Vasiliy Zhernenkov",
+      truckNumber: "AX1023BT",
+      truckLocation: "Buenos Aires",
+      truckType: "TILT"
+    }];
+
+// LOGIN & REGISTRATION
+
+if (document.title == "Login" || document.title == "Register") {
+
+const FORM_BUTTON = document.querySelector('.form__button');
 
 FORM_BUTTON.addEventListener('click', validate);
 
-// FUNCTIONS
-
 document.getElementById('password').addEventListener('input', validatePassword);
 
-function validate (e) {
+
+}
+
+// TRANSPORTATION
+
+if (document.title == "Transport") {
+
+  createDriverList(driverList);
+
+  const FORM = document.getElementById('transport__form');
+
+  
+
+  FORM.addEventListener('submit', addDriver);
+
+
+
+}
+ 
+// FUNCTIONS
+
+function addDriver (e) {
+
+  e.preventDefault();
+
+  let Name = document.querySelector('#truck__name').value,
+      Driver = document.querySelector('#truck__driver').value,
+      Number = document.querySelector('#truck__number').value,
+      Location = document.querySelector('#truck__location').value,
+      Type = [...document.querySelectorAll('.form__radio')].filter(el => el.checked)[0].id;
+
+  driverList.push({
+    truckName: Name,
+    truckDriver: Driver,
+    truckNumber: Number,
+    truckLocation: Location,
+    truckType: Type
+  });
+  
+  createDriverList(driverList);
+};
+
+function createDriverList (arr) {
+  let list = document.querySelector('.transport__list');
+  let cards = ''
+  list.innerHTML = "";
+
+  arr.forEach(el => {
+    cards += `<li class="transport__item">
+    <div class="transport__card">
+      <div class="transport__card-header">
+        <h3 class="transport__driver">${el.truckDriver}</h3>
+        <img src="img/truck.jpeg" alt="" class="transport__logo">
+      </div>
+      <div class="transport__information">
+        <div class="information__item">
+          <div class="transport__info transport__name">Truck name: <span class="info">${el.truckName}</span></div>
+          <div class="transport__info transport__number">Number: <span class="info">${el.truckNumber}</span></div>
+          <div class="transport__info transport__type">Type: <span class="info">${el.truckType}</span></div>
+        </div>
+        <div class="information__item">
+          <div class="transport__info transport__location">Current location: <span class="info">${el.truckLocation}</span></div>
+          <div class="transport__weather">???</div>
+        </div>
+      </div>
+    </div>
+  </li>`
+  });
+
+  list.innerHTML = cards;
+} 
+
+function validateLogReg (e) {
+
   e.preventDefault();
   
-  let email = document.getElementById('email').value,
+  let email = document.getElementById('email').value ,
       password = document.getElementById('password').value;
   
   if (e.target.id == 'register') {
     let name = document.getElementById('name').value,
         tel = document.getElementById('phone').value;
     
-    if (validateName(name) && validateEmail(email) && validatePhone(tel) && passwordStopper) {
-      window.location.href = 'index.html';
+    validateStr(name, 'name');
+    validateEmail(email, 'email');
+    validatePhone(tel, 'phone');
+
+    if (passwordStopper && password) {
+      let checkMassive = document.querySelectorAll(".active")
+      console.log(checkMassive);
+
+      if (checkMassive.length == 0) {
+        window.location.href = 'transport.html';
+      }
     }
-  } else {
+
+
+  } else if (e.target.id == 'login') {
     let admin = {
       email: "admin@gmail.com",
       password: "admin"
@@ -47,58 +129,35 @@ function validate (e) {
 
     if (password == admin.password && email == admin.email) {
       window.location.href = 'transport.html';
-    } else {
-
-    }
+    };
   }
-  
   
 };
 
-function validateName (name) {
+function validateStr (name, id) {
   let errors = '';
-  const ERROR_LABEL = document.querySelector('.label-for-name');
 
   if (name.split('').filter(e => numbers.includes(e) || symbols.includes(e)).length > 0) errors += "Name shouldn't contains any number or symbol. ";
   if (name.length <= 2) errors += "Length shoud be more than 2 letters. "
-
-  if (errors.length > 0) {
-    ERROR_LABEL.textContent = errors;
-    return false;
-  }
   
-  ERROR_LABEL.textContent = errors;
-  return true;
+  message (errors, id)  
 };
 
-function validateEmail (email) {
+function validateEmail (email, id) {
   let errors = '';
-  const ERROR_LABEL = document.querySelector('.label-for-email');
 
-  if (email.split('').filter(e => e == '@' || e == '.').length == 0) errors += "Incorrect email";
+  if (email.split('').filter(e => e == '@' || e == '.').length == 0) errors = "Incorrect email";
+  if (email.length < 6) errors = "Incorrect email";
 
-  if (errors.length > 0) {
-    ERROR_LABEL.textContent = errors;
-    return false;
-  }
-  
-  ERROR_LABEL.textContent = errors;
-  return true;
+  message (errors, id)  
 };
 
-function validatePhone (tel) {
+function validatePhone (tel, id) {
   let errors = '';
-  const ERROR_LABEL = document.querySelector('.label-for-tel');
 
   if (tel.split('').filter(e => numbers.includes(e)).length !== tel.length || tel.length == 0 || tel.length > 10) errors += "Incorrect number";
 
-  if (errors.length > 0) {
-    ERROR_LABEL.textContent = errors;
-    return false;
-  }
-  
-  ERROR_LABEL.textContent = errors;
-  return true;
+  message(errors, id);
 };
 
 function validatePassword (e) {
@@ -156,25 +215,21 @@ function validatePassword (e) {
     passwordStopper = 1;
   }
 };
-}
 
-// TRANSPORTATION
+function message (errors, id) {
+  const LABEL = document.querySelector(`#${id}`).previousElementSibling;
 
-if (document.head.title == "Transport") {
+  LABEL.textContent = errors;
 
-  const FORM_BUTTON = document.querySelector('.form__button');
-
-  FORM_BUTTON.addEventListener('click', addTruck);
-
-  function addTruck(e) {
-    
+  if (errors.length > 0) {
+    if(!LABEL.classList.contains('active')) {
+      LABEL.classList.add('active');
+    }
+  } else {
+    if(LABEL.classList.contains('active')) {
+      LABEL.classList.remove('active');
+    }
   }
-
-
-
-
 }
- 
-// FUNCTIONS
 
 })();
