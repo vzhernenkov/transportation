@@ -1,8 +1,12 @@
 (() => {
 
+// LOGIN & REGISTRATION
+
+if (document.head.title == "Login" || document.head.title == "Register") {
+
 //CONSTANTS
 
-const FORM_BUTTON = document.querySelector('.form__button') || 0;
+const FORM_BUTTON = document.querySelector('.form__button');
 
 
 // VARIABLES
@@ -16,9 +20,6 @@ let numbers = '01234567890',
 FORM_BUTTON.addEventListener('click', validate);
 
 // FUNCTIONS
-
-
-// validators
 
 document.getElementById('password').addEventListener('input', validatePassword);
 
@@ -152,5 +153,25 @@ function validatePassword (e) {
     passwordStopper = 1;
   }
 };
+}
+
+// TRANSPORTATION
+
+if (document.head.title == "Transport") {
+
+  const FORM_BUTTON = document.querySelector('.form__button');
+
+  FORM_BUTTON.addEventListener('click', addTruck);
+
+  function addTruck(e) {
+    
+  }
+
+
+
+
+}
  
+// FUNCTIONS
+
 })();

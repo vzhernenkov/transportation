@@ -108,6 +108,12 @@ h1, h2, h3, p, ul {
   width: 50%;
 }
 
+.hero__button {
+  background: #E70000;
+  color: white;
+  font-size: 20px;
+}
+
 .hero__image {
   height: 100%;
   display: flex;
@@ -204,7 +210,7 @@ h1, h2, h3, p, ul {
 .form__password-block {
   display: flex;
   flex-direction: column;
-  padding-top: 30px;
+  margin-bottom: 20px;
 }
 
 .password__header {
@@ -279,6 +285,7 @@ h1, h2, h3, p, ul {
 .transport__item {
   border: 1px solid #E70000;
   border-radius: 20px;
+  margin-bottom: 20px;
 }
 
 .transport__card-header {
