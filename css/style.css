@@ -231,3 +231,96 @@ h1, h2, h3, p, ul {
   font-size: 10px;
   color: #E70000;
 }
+
+.transport__main {
+  height: 91vh;
+}
+
+.transport__container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.transport__block {
+  padding: 70px 30px;
+}
+
+.add__block {
+  width: 30%;
+  border-right: 1px solid #E70000;
+}
+
+.list__block {
+  width: 70%;
+}
+
+.transport__add-panel {
+  width: 80%;
+}
+
+.transport__list-header {
+  font-size: 35px;
+  margin-bottom: 40px;
+}
+
+.transport__header {
+  border-bottom: 1px solid #E70000;
+}
+
+.form__input_transport {
+  margin-bottom: 20px;
+}
+
+.transport__add {
+  width: 120px;
+}
+
+.transport__item {
+  border: 1px solid #E70000;
+  border-radius: 20px;
+}
+
+.transport__card-header {
+  padding: 10px 20px;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  background-color: #E70000;
+}
+
+.transport__logo {
+  right: 10px;
+  top: 10px;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 15px;
+  border: 1px solid #E70000;
+}
+
+.transport__driver {
+  font-size: 25px;
+  color: white;
+}
+
+.transport__information {
+  padding: 20px;
+  display: flex;
+}
+
+.information__item:first-child {
+  margin-right: 150px;
+}
+
+.transport__info {
+  font-size: 15px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.info {
+  font-weight: normal;
+}

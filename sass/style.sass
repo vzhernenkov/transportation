@@ -2,6 +2,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300400500&display=swap');
 
+$main-color: #E70000
+
 html
     box-sizing: border-box
 
@@ -125,7 +127,7 @@ h1, h2, h3, p, ul
 
 
 .footer
-    background-color: #E70000
+    background-color: $main-color
     height: 100%
     padding: 20px 0px
 
@@ -164,11 +166,11 @@ h1, h2, h3, p, ul
 
 .form__button
     text-align: center
-    border: 1px solid #E70000
+    border: 1px solid $main-color
     padding: 10px 15px
     border-radius: 10px
     font-size: 15px
-    background-color: #E70000
+    background-color: $main-color
     color: white
     margin-bottom: 10px
     
@@ -207,17 +209,89 @@ h1, h2, h3, p, ul
     bottom: -10px
     left: 15px
     font-size: 10px
-    color: #E70000
-
-.length
-.symbols
-.big-letter
-.number
+    color: $main-color
 
 
-.label-for-name
+// transport page
 
-.label-for-tel
+.transport__main
+    height: 91vh
 
-.label-for-email
+.transport__container
+    display: flex
+    flex-direction: row
+    height: 100%
+
+.transport__block
+    padding: 70px 30px
+
+.add__block
+    width: 30%
+    border-right: 1px solid $main-color
+
+.list__block
+    width: 70%
+
+.transport__add-panel
+    width: 80%
+.transport__list-header
+    font-size: 35px
+    margin-bottom: 40px
+
+.transport__header
+    border-bottom: 1px solid $main-color
+
+.transport__form
+.form__input_transport
+    margin-bottom: 20px
+
+.transport__type-block
+.transport__add
+    width: 120px
+
+.transport__item
+    border: 1px solid $main-color
+    border-radius: 20px
+.transport__card
+    
+    
+.transport__card-header
+    padding: 10px 20px
+    border-top-right-radius: 15px
+    border-top-left-radius: 15px
+    position: relative
+    display: flex
+    flex-direction: row
+    background-color: $main-color
+
+
+.transport__logo
+    right: 10px
+    top: 10px
+    position: absolute
+    width: 80px
+    height: 80px
+    border-radius: 15px
+    border: 1px solid $main-color
+.transport__driver
+    font-size: 25px
+    color: white
+.transport__information
+    padding: 20px
+    display: flex
+
+.information__item:first-child
+    margin-right: 150px
+
+.transport__info
+    font-size: 15px
+    margin-bottom: 10px
+    font-weight: bold
+.info
+    font-weight: normal
+
+.transport__name
+.transport__location
+.transport__type
+.transport__weather
 

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spot</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+  <div class="overlay">
+      <header class="header transport__header">
+        <div class="container">
+          <h1 class="visually-hidden">Spot transportation managment system</h1>
+          <nav class="header__nav">
+            <a href="index.html" class="header__logo">
+              <span class="header__logo-text">SPOT</span>
+              <span class="header__logo-round"></span>
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="transport__main">
+        <div class="transport__container container">
+          <div class="transport__block add__block">
+            <div class="transport__add-panel">
+              <h2 class="transport__list-header">Add your truck</h2>
+              <form action="#" method="post" class="transport__form">
+                <input class="form__input form__input_transport" type="text" placeholder="Truck">
+                <input class="form__input form__input_transport" type="text" placeholder="Truck number">
+                <input class="form__input form__input_transport" type="text" placeholder="Current location">
+                <input class="form__input form__input_transport" type="text" placeholder="Driver">
+                <div class="transport__type-block form__input_transport">
+                  <input type="radio" name="trailer" id="">REF
+                  <input type="radio" name="trailer" id="">TILT
+                </div>
+                <button type="submit" class="transport__add form__button">Add driver</button>
+              </form>
+            </div>
+          </div>
+          <div class="transport__block list__block">
+            <h2 class="transport__list-header">Your fleet</h2>
+            <ul class="transport__list">
+              <li class="transport__item">
+                <div class="transport__card">
+                  <div class="transport__card-header">
+                    <h3 class="transport__driver">Vasiliy Zhernenkov</h3>
+                    <img src="img/truck.jpeg" alt="" class="transport__logo">
+                  </div>
+                  <div class="transport__information">
+                    <div class="information__item">
+                      <div class="transport__info transport__name">Truck name: <span class="info">Eagle1</span></div>
+                      <div class="transport__info transport__number">Number: <span class="info">AX1023BT</span></div>
+                      <div class="transport__info transport__type">Type: <span class="info">TILT</span></div>
+                    </div>
+                    <div class="information__item">
+                      <div class="transport__info transport__location">Current location: <span class="info">Buenos Aires</span></div>
+                      <div class="transport__weather">???</div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="footer__container container">
+          <a href="index.html" class="footer__logo">
+            <span class="footer__logo-text">SPOT</span>
+            <span class="footer__logo-round"></span>
+          </a>
+        </div>
+      </footer>
+  </div>
+</body>
+</html>

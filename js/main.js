@@ -42,7 +42,7 @@ function validate (e) {
     }
 
     if (password == admin.password && email == admin.email) {
-      window.location.href = 'index.html';
+      window.location.href = 'transport.html';
     } else {
 
     }
@@ -81,7 +81,6 @@ function validateEmail (email) {
   ERROR_LABEL.textContent = errors;
   return true;
 };
-
 
 function validatePhone (tel) {
   let errors = '';
@@ -153,11 +152,5 @@ function validatePassword (e) {
     passwordStopper = 1;
   }
 };
-
-function loginUser (email, password, companyName) {
-
-
-  return false;
-}
  
 })();
