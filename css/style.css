@@ -237,10 +237,6 @@ h1, h2, h3, p, ul {
   color: red;
 }
 
-.transport__main {
-  height: 91vh;
-}
-
 .transport__container {
   display: flex;
   flex-direction: row;
@@ -248,7 +244,7 @@ h1, h2, h3, p, ul {
 }
 
 .transport__block {
-  padding: 70px 30px;
+  padding: 70px 30px 170px;
 }
 
 .add__block {
@@ -292,16 +288,6 @@ h1, h2, h3, p, ul {
   display: flex;
   flex-direction: row;
   background-color: #1A65DE;
-}
-
-.transport__logo {
-  right: 10px;
-  top: 10px;
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  border-radius: 15px;
-  border: 1px solid #1A65DE;
 }
 
 .transport__driver {

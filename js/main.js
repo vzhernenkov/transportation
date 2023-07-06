@@ -76,7 +76,6 @@ function createDriverList (arr) {
     <div class="transport__card">
       <div class="transport__card-header">
         <h3 class="transport__driver">${el.truckDriver}</h3>
-        <img src="img/truck.jpeg" alt="" class="transport__logo">
       </div>
       <div class="transport__information">
         <div class="information__item">
