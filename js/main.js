@@ -35,8 +35,6 @@ if (document.title == "Transport") {
 
   const FORM = document.getElementById('transport__form');
 
-  
-
   FORM.addEventListener('submit', addDriver);
 
 
@@ -93,6 +91,8 @@ function createDriverList (arr) {
   });
 
   list.innerHTML = cards;
+  document.getElementById('transport__form').reset();
+
 } 
 
 function validateLogReg (e) {
