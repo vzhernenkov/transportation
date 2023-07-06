@@ -234,7 +234,7 @@ h1, h2, h3, p, ul {
   bottom: -10px;
   left: 15px;
   font-size: 10px;
-  color: #1A65DE;
+  color: red;
 }
 
 .transport__main {

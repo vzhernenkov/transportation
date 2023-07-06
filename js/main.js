@@ -1,13 +1,16 @@
 (() => {
 
+console.log(document.title)
+
 // LOGIN & REGISTRATION
 
-if (document.head.title == "Login" || document.head.title == "Register") {
+if (document.title == "Login" || document.title == "Register") {
 
 //CONSTANTS
 
 const FORM_BUTTON = document.querySelector('.form__button');
 
+console.log('hel')
 
 // VARIABLES
 
