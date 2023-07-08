@@ -133,10 +133,13 @@ h1, h2, h3, p, ul {
 .image {
   width: 100%;
   height: 50%;
-  background-image: url(../img/img1.png);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main__image {
+  width: 50%;
 }
 
 .footer {
