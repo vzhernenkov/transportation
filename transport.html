@@ -14,10 +14,21 @@
         <div class="container">
           <h1 class="visually-hidden">Spot transportation managment system</h1>
           <nav class="header__nav">
-            <a href="index.html" class="header__logo">
+            <a href="transportmain.html" class="header__logo">
               <span class="header__logo-text">SPOT</span>
               <span class="header__logo-round"></span>
             </a>
+            <ul class="side__list">
+              <li class="side__item">
+                <a href="transportmain.html" class="side__link">Orders</a>
+              </li>
+              <li class="side__item">
+                <a href="finance.html" class="side__link">Finance</a>
+              </li>
+              <li class="side__item">
+                <a href="transport.html" class="side__link link__active">My fleet (demo)</a>
+              </li>
+            </ul>
           </nav>
         </div>
       </header>
@@ -26,7 +37,7 @@
         <div class="transport__container container">
           <div class="transport__block add__block">
             <div class="transport__add-panel">
-              <h2 class="transport__list-header">Add your truck</h2>
+              <h2 class="transport__list-header transport__list-header-margin">Add your truck</h2>
               <form action="#" method="post" id="transport__form" class="transport__form">
                 <div class="form__group">
                   <label class="form__error-label label-for-name" for="name"></label>
@@ -58,7 +69,10 @@
             </div>
           </div>
           <div class="transport__block list__block">
-            <h2 class="transport__list-header">Your fleet</h2>
+            <div class="trasport__search-bar">
+              <h2 class="transport__list-header">Your fleet</h2>
+              <input type="search" placeholder="Search" class="transport__search">
+            </div>
             <ul class="transport__list">
               <!-- <li class="transport__item">
                 <div class="transport__card">

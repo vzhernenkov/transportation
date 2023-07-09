@@ -6,6 +6,7 @@ $main-color: #1A65DE
 
 html
     box-sizing: border-box
+    height: 100%
 
 *,
 *::before,
@@ -13,6 +14,7 @@ html
     box-sizing: inherit
 
 body
+    height: 100%
     min-width: 320px
     margin: 0
     font-family: Poppins, sans-serif
@@ -56,6 +58,15 @@ h1, h2, h3, p, ul
   width: 1px !important
   overflow: hidden
 
+.overlay
+    min-height: 100%
+    display: flex
+    flex-direction: column
+
+main
+    flex: 1 1 auto
+    min-height: 100%
+
 
 // START PAGE
 
@@ -90,7 +101,22 @@ h1, h2, h3, p, ul
     border: 1px solid $main-color
     padding: 10px 20px
     border-radius: 10px
+
+.side__list
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+    min-width: 400px
     
+.side__item
+
+.side
+
+.link__active
+    color: $main-color
+
+
 .hero__container
     display: flex
     flex-direction: row
@@ -244,7 +270,7 @@ h1, h2, h3, p, ul
     width: 80%
 .transport__list-header
     font-size: 35px
-    margin-bottom: 40px
+    
 
 .transport__header
     border-bottom: 1px solid $main-color
@@ -296,9 +322,30 @@ h1, h2, h3, p, ul
 .form__radio
     transform: translateY(-2px)
 
+.trasport__search-bar
+    display: flex
+    flex-direction: row
+    margin-bottom: 40px
+    justify-content: space-between
 
+.transport__list-header-margin
+    margin-bottom: 40px
 .transport__name
 .transport__location
 .transport__type
 .transport__weather
+
+
+
+// orders
+
+.orders__block
+    padding: 30px 30px
+
+.orders__menu
+    width: 15%
+    border-right: 1px solid $main-color
+    padding-left: 0px
+
+.orders__list
 

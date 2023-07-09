@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300400500&display=swap");
 html {
   box-sizing: border-box;
+  height: 100%;
 }
 
 *,
@@ -10,6 +11,7 @@ html {
 }
 
 body {
+  height: 100%;
   min-width: 320px;
   margin: 0;
   font-family: Poppins, sans-serif;
@@ -56,6 +58,17 @@ h1, h2, h3, p, ul {
   overflow: hidden;
 }
 
+.overlay {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 1 auto;
+  min-height: 100%;
+}
+
 .header {
   border-bottom: 1px solid black;
   padding: 20px 0px;
@@ -92,6 +105,18 @@ h1, h2, h3, p, ul {
   border: 1px solid #1A65DE;
   padding: 10px 20px;
   border-radius: 10px;
+}
+
+.side__list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 400px;
+}
+
+.link__active {
+  color: #1A65DE;
 }
 
 .hero__container {
@@ -266,7 +291,6 @@ h1, h2, h3, p, ul {
 
 .transport__list-header {
   font-size: 35px;
-  margin-bottom: 40px;
 }
 
 .transport__header {
@@ -325,4 +349,25 @@ h1, h2, h3, p, ul {
 
 .form__radio {
   transform: translateY(-2px);
+}
+
+.trasport__search-bar {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 40px;
+  justify-content: space-between;
+}
+
+.transport__list-header-margin {
+  margin-bottom: 40px;
+}
+
+.orders__block {
+  padding: 30px 30px;
+}
+
+.orders__menu {
+  width: 15%;
+  border-right: 1px solid #1A65DE;
+  padding-left: 0px;
 }
