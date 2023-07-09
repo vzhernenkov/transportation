@@ -412,34 +412,13 @@ main {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 15%;
 }
 
 .order__dash {
   border: 1px dashed #1A65DE;
-  width: 20%;
+  width: 30%;
 }
 
 .order__id {
-  font-weight: 300;
-}
-
-.order__dates {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 25%;
-}
-
-.order__type {
-  font-weight: 300;
-  margin-right: 10px;
-}
-
-.order__buttons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
+  font-weight: bold;
+}/*# sourceMappingURL=style.css.map */
