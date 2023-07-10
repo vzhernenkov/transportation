@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spot</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script defer src="js/main.js"></script>
+  <title>Login</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script defer src="../js/main.js"></script>
 </head>
 <body>
   <div class="overlay">
@@ -14,15 +14,10 @@
         <div class="container">
           <h1 class="visually-hidden">Spot transportation managment system</h1>
           <nav class="header__nav">
-            <a href="index.html" class="header__logo">
+            <a href="../orders/" class="header__logo">
               <span class="header__logo-text">SPOT</span>
               <span class="header__logo-round"></span>
             </a>
-            <div class="header__login-buttons-group">
-              <div class="header__item">
-                <a href="login.html" class="header__login-button">Log in</a>
-              </div>
-            </div>
           </nav>
         </div>
       </header>
@@ -31,15 +26,17 @@
         <section class="hero">
           <div class="hero__container container">
             <div class="hero__item">
-              <h3 class="hero__text">Easy to learn, easy to master transport managing system</h3>
-              <div class="hero__text-small">
-                This pet project was built by Zhernenkov Vasiliy.<br>The main aim of the project is to simplify fleet management and allow transport companies to take orders faster. 
-              </div>
-              <a href="register.html" class="header__login-button hero__button">Join us</a>
+              <h2 class="form-header">Log in</h2>
+              <form action="#" method="post" class="hero__form login__form">              
+                <input required class="form__input" type="email" placeholder="Email" id="email">
+                <input required class="form__input" type="password" placeholder="Password" id="password">
+                <a href="../orders/" class="form__button" id="login" type="submit">Go to the SPOT<span class="header__logo-round header__logo-round_login-edition"></span></a>
+                <a href="../register/" class="hero__go-to-register">I dont have an account</a>
+              </form>
             </div>
             <div class="hero__item hero__image">
               <div class="image">
-                <img class="main__image" src="img/img1.png" alt="">
+                <img class="main__image" src="../img/img1.png" alt="">
               </div>
             </div>
           </div>
@@ -48,7 +45,7 @@
 
       <footer class="footer">
         <div class="footer__container container">
-          <a href="index.html" class="footer__logo">
+          <a href="../orders/" class="footer__logo">
             <span class="footer__logo-text">SPOT</span>
             <span class="footer__logo-round"></span>
           </a>

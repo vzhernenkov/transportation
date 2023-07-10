@@ -4,30 +4,30 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Account</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script defer src="js/main.js"></script>
+  <title>Orders</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script defer src="../js/main.js"></script>
 </head>
 <body>
   <div class="overlay">
       <header class="header transport__header">
-        <div class="container">
+        <div class="container container_less-padding">
           <h1 class="visually-hidden">Spot transportation managment system</h1>
           <nav class="header__nav">
-            <a href="transportmain.html" class="header__logo">
+            <a href="../orders/" class="header__logo">
               <span class="header__logo-text">SPOT</span>
               <span class="header__logo-round"></span>
             </a>
 
               <ul class="side__list">
                 <li class="side__item">
-                  <a href="transportmain.html" class="side__link link__active">Orders</a>
+                  <a href="../orders/" class="side__link link__active">Orders</a>
                 </li>
                 <li class="side__item">
-                  <a href="finance.html" class="side__link">Finance</a>
+                  <a href="../finance/" class="side__link">Finance</a>
                 </li>
                 <li class="side__item">
-                  <a href="transport.html" class="side__link">My fleet (demo)</a>
+                  <a href="../fleet/" class="side__link">My fleet (demo)</a>
                 </li>
               </ul>
 
@@ -36,7 +36,7 @@
       </header>
 
       <main class="transport__main">
-        <div class="transport__container container">
+        <div class="transport__container container container_less-padding">
           <div class="orders__block orders__menu">
               <h2 class="transport__list-header transport__list-header-margin">Vacant</h2>
               <ul class="orders__menu-list">
@@ -47,21 +47,12 @@
                   <a href="#" class="order__menu-link">Completed</a>
                 </li>
                 <li class="orders__menu-item">
-                  <a href="#" class="order__menu-link">Need to confirm</a>
+                  <a href="#" class="order__menu-link">Unconfirmed</a>
                 </li>
               </ul>
           </div>
           <div class="orders__block orders__list">
             <h2 class="transport__list-header transport__list-header-margin">Orders</h2>
-            <div class="orders__header">
-                <div class="order__cards-header order__cards-header-id">ID</div>
-                <div class="order__cards-header order__cards-header-from">From</div>
-                <div class="order__cards-header order__cards-header-to">To</div>
-                <div class="order__cards-header order__cards-header-truck-type">Truck type</div>
-                <div class="order__cards-header order__cards-header-cargo">Cargo</div>
-                <div class="order__cards-header order__cards-header-load">Load date</div>
-                <div class="order__cards-header order__cards-header-arrival">Arrival date</div>
-            </div>
             <ul class="orders">
               <li class="order__cart">
                 <div class="order__description order__id">AR123</div>
@@ -79,9 +70,10 @@
                   <div class="order__dash"></div>
                   <div class="order__description order__unload-date">15.07.2023</div>
                 </div>
+                <div class="order__description order__price">2500$</div>
                 <div class="order__buttons">
-                  <button class="order__more-info-button">More info</button>
-                  <button class="order__pick-up-button">Book</button>
+                  <!-- <button class="order__more-info-button">More info</button> -->
+                  <button class="order__pick-up-button">More info</button>
                 </div>
               </li>
             </ul>
@@ -91,8 +83,8 @@
       </main>
 
       <footer class="footer">
-        <div class="footer__container container">
-          <a href="index.html" class="footer__logo">
+        <div class="footer__container container container_less-padding">
+          <a href="../orders/" class="footer__logo">
             <span class="footer__logo-text">SPOT</span>
             <span class="footer__logo-round"></span>
           </a>

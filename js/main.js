@@ -20,7 +20,7 @@ if (document.title == "Login" || document.title == "Register") {
 
 const FORM_BUTTON = document.querySelector('.form__button');
 
-FORM_BUTTON.addEventListener('click', validate);
+FORM_BUTTON.addEventListener('click', validateLogReg);
 
 document.getElementById('password').addEventListener('input', validatePassword);
 
@@ -35,65 +35,19 @@ if (document.title == "Transport") {
 
   const FORM = document.getElementById('transport__form');
 
-  FORM.addEventListener('submit', addDriver);
+  FORM.addEventListener('submit', function (e) {
+    let newDriver = addDriver(e);
+    driverList.push(newDriver);
+    createDriverList(driverList);
+  });
 
+  const SEARCH =  document.querySelector('.transport__search');
 
+  SEARCH.addEventListener('input', searchTruck);
 
 }
  
 // FUNCTIONS
-
-function addDriver (e) {
-
-  e.preventDefault();
-
-  let Name = document.querySelector('#truck__name').value,
-      Driver = document.querySelector('#truck__driver').value,
-      Number = document.querySelector('#truck__number').value,
-      Location = document.querySelector('#truck__location').value,
-      Type = [...document.querySelectorAll('.form__radio')].filter(el => el.checked)[0].id;
-
-  driverList.push({
-    truckName: Name,
-    truckDriver: Driver,
-    truckNumber: Number,
-    truckLocation: Location,
-    truckType: Type
-  });
-  
-  createDriverList(driverList);
-};
-
-function createDriverList (arr) {
-  let list = document.querySelector('.transport__list');
-  let cards = ''
-  list.innerHTML = "";
-
-  arr.forEach(el => {
-    cards += `<li class="transport__item">
-    <div class="transport__card">
-      <div class="transport__card-header">
-        <h3 class="transport__driver">${el.truckDriver}</h3>
-      </div>
-      <div class="transport__information">
-        <div class="information__item">
-          <div class="transport__info transport__name">Truck name: <span class="info">${el.truckName}</span></div>
-          <div class="transport__info transport__number">Number: <span class="info">${el.truckNumber}</span></div>
-          <div class="transport__info transport__type">Type: <span class="info">${el.truckType}</span></div>
-        </div>
-        <div class="information__item">
-          <div class="transport__info transport__location">Current location: <span class="info">${el.truckLocation}</span></div>
-          <div class="transport__weather">???</div>
-        </div>
-      </div>
-    </div>
-  </li>`
-  });
-
-  list.innerHTML = cards;
-  document.getElementById('transport__form').reset();
-
-} 
 
 function validateLogReg (e) {
 
@@ -115,7 +69,7 @@ function validateLogReg (e) {
       console.log(checkMassive);
 
       if (checkMassive.length == 0) {
-        window.location.href = 'transport.html';
+        window.location.href = '../orders/';
       }
     }
 
@@ -127,7 +81,7 @@ function validateLogReg (e) {
     }
 
     if (password == admin.password && email == admin.email) {
-      window.location.href = 'transport.html';
+      window.location.href = '../orders/';
     };
   }
   
@@ -232,3 +186,56 @@ function message (errors, id) {
 }
 
 })();
+
+//FUNCTIONS
+
+// Use Classses
+function addDriver (e) {
+
+  e.preventDefault();
+
+  let Name = document.querySelector('#truck__name').value,
+      Driver = document.querySelector('#truck__driver').value,
+      Number = document.querySelector('#truck__number').value,
+      Location = document.querySelector('#truck__location').value,
+      Type = [...document.querySelectorAll('.form__radio')].filter(el => el.checked)[0].id,
+      newDriver = {
+        truckName: Name,
+        truckDriver: Driver,
+        truckNumber: Number,
+        truckLocation: Location,
+        truckType: Type
+      }
+  
+  document.getElementById('transport__form').reset();
+  return newDriver;
+};
+
+function createDriverList (arr) {
+  let list = document.querySelector('.transport__list');
+  let cards = ''
+  list.innerHTML = "";
+
+  arr.forEach(el => {
+    cards += `<li class="transport__item">
+    <div class="transport__card">
+      <div class="transport__card-header">
+        <h3 class="transport__driver">${el.truckDriver}</h3>
+      </div>
+      <div class="transport__information">
+        <div class="information__item">
+          <div class="transport__info transport__name">Truck name: <span class="info">${el.truckName}</span></div>
+          <div class="transport__info transport__number">Number: <span class="info">${el.truckNumber}</span></div>
+          <div class="transport__info transport__type">Type: <span class="info">${el.truckType}</span></div>
+        </div>
+        <div class="information__item">
+          <div class="transport__info transport__location">Current location: <span class="info">${el.truckLocation}</span></div>
+          <div class="transport__weather">???</div>
+        </div>
+      </div>
+    </div>
+  </li>`
+  });
+
+  list.innerHTML = cards;
+}; 
