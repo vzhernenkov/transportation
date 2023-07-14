@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orders</title>
-  <link rel="stylesheet" href="../css/style.css">
-  <script defer src="../js/main.js"></script>
+  <title>Active</title>
+  <link rel="stylesheet" href="../../css/style.css">
+  <script defer src="../../js/main.js"></script>
 </head>
 <body>
   <div class="overlay">
@@ -14,26 +14,26 @@
         <div class="container container_less-padding">
           <h1 class="visually-hidden">Spot transportation managment system</h1>
           <nav class="header__nav">
-            <a href="../orders/" class="header__logo">
+            <a href="../" class="header__logo">
               <span class="header__logo-text">SPOT</span>
               <span class="header__logo-round"></span>
             </a>
 
               <ul class="side__list">
                 <li class="side__item">
-                  <a href="../orders/" class="side__link link__active">Orders</a>
+                  <a href="../" class="side__link link__active">Orders</a>
                 </li>
                 <li class="side__item">
                   <a href="../finance/" class="side__link">Finance</a>
                 </li>
                 <li class="side__item side__item_more-margin">
-                  <a href="../fleet/" class="side__link">My fleet (demo)</a>
+                  <a href="../../fleet/" class="side__link">My fleet (demo)</a>
                 </li>
                 <li class="side__item">
-                  <div id="user" class="current__user"></div>
+                  <div id="user" class="current__user">Vasiliy Zhernenkov</div>
                 </li>
                 <li class="side__item">
-                  <a href="../spot/" class="side__link">Log out</a>
+                  <a href="../../spot/" class="side__link">Log out</a>
                 </li>
               </ul>
 
@@ -46,16 +46,16 @@
           <div class="orders__block orders__menu">
               <ul class="orders__menu-list">
                 <li class="orders__menu-item">
-                  <h2 class="transport__list-header transport__list-header-margin">Vacant</h2>
+                  <h2 class="transport__list-header transport__list-header-margin">Active</h2>
                 </li>
                 <li class="orders__menu-item">
-                  <a href="/orders/active/" class="order__menu-link">Active</a>
+                  <a href="../" class="order__menu-link">Vacant</a>
                 </li>
                 <li class="orders__menu-item">
-                  <a href="/orders/completed/" class="order__menu-link">Completed</a>
+                  <a href="../completed/" class="order__menu-link">Completed</a>
                 </li>
                 <li class="orders__menu-item">
-                  <a href="/orders/declined/" class="order__menu-link">Declined</a>
+                  <a href="../declined/" class="order__menu-link">Declined</a>
                 </li>
               </ul>
           </div>
@@ -80,6 +80,7 @@
                 </div>
                 <div class="order__description order__price">2500$</div>
                 <div class="order__buttons">
+                  <!-- <button class="order__more-info-button">More info</button> -->
                   <button class="order__pick-up-button">More info</button>
                 </div>
               </li>
@@ -91,7 +92,7 @@
 
       <footer class="footer">
         <div class="footer__container container container_less-padding">
-          <a href="../orders/" class="footer__logo">
+          <a href="../" class="footer__logo">
             <span class="footer__logo-text">SPOT</span>
             <span class="footer__logo-round"></span>
           </a>

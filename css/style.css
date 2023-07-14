@@ -8,6 +8,7 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
+  transition: all 2ms easy;
 }
 
 body {
@@ -112,7 +113,11 @@ main {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  min-width: 400px;
+  min-width: 600px;
+}
+
+.side__item_more-margin {
+  margin-right: 60px;
 }
 
 .link__active {
@@ -303,34 +308,19 @@ main {
   margin-bottom: 20px;
 }
 
-.transport__card-header {
-  padding: 10px 20px;
-  border-top-right-radius: 15px;
-  border-top-left-radius: 15px;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  background-color: #1A65DE;
-}
-
-.transport__driver {
-  font-size: 25px;
-  color: white;
-}
-
 .transport__information {
   padding: 20px;
   display: flex;
-}
-
-.information__item:first-child {
-  margin-right: 150px;
+  justify-content: space-between;
 }
 
 .transport__info {
   font-size: 15px;
-  margin-bottom: 10px;
   font-weight: bold;
+}
+
+.transport__info:not(:last-child) {
+  margin-bottom: 10px;
 }
 
 .info {
@@ -356,6 +346,40 @@ main {
 
 .transport__list-header-margin {
   margin-bottom: 40px;
+}
+
+.information__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.transport__button {
+  cursor: pointer;
+  padding: 5px 10px;
+  background-color: white;
+  font-size: 12px;
+  font-weight: normal;
+  border: 1px solid #1A65DE;
+  border-radius: 7px;
+}
+
+.orders__menu {
+  min-width: 220px;
+}
+
+.orders__menu-item:not(:first-child) {
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 2ms easy;
+}
+
+.orders__menu-item:not(:first-child):hover {
+  color: #1A65DE;
+}
+
+#user {
+  font-weight: bold;
 }
 
 .orders__block {

@@ -1,6 +1,6 @@
 // MAIN SECTION
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300400500&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300400500&display=swap');
 
 $main-color: #1A65DE
 
@@ -12,6 +12,7 @@ html
 *::before,
 *::after 
     box-sizing: inherit
+    transition: all 2ms easy
 
 body
     height: 100%
@@ -107,9 +108,11 @@ main
     flex-direction: row
     justify-content: space-between
     align-items: center
-    min-width: 400px
+    min-width: 600px
     
-.side__item
+.side__item_more-margin
+    margin-right: 60px
+
 
 .side
 
@@ -245,6 +248,7 @@ main
     color: red
 
 
+
 // transport page
 
 // .transport__main
@@ -284,33 +288,20 @@ main
     margin-bottom: 20px
 
 .transport__card
-    
-    
-.transport__card-header
-    padding: 10px 20px
-    border-top-right-radius: 15px
-    border-top-left-radius: 15px
-    position: relative
-    display: flex
-    flex-direction: row
-    background-color: $main-color
 
-
-.transport__driver
-    font-size: 25px
-    color: white
 
 .transport__information
     padding: 20px
     display: flex
-
-.information__item:first-child
-    margin-right: 150px
+    justify-content: space-between
 
 .transport__info
     font-size: 15px
-    margin-bottom: 10px
     font-weight: bold
+
+.transport__info:not(:last-child)
+    margin-bottom: 10px    
+    
 .info
     font-weight: normal
 
@@ -330,24 +321,44 @@ main
 
 .transport__list-header-margin
     margin-bottom: 40px
-.transport__name
-.transport__location
-.transport__type
-.transport__weather
+
+.information__item
+    display: flex
+    flex-direction: column
+    justify-content: center
+
+.transport__button
+    cursor: pointer
+    padding: 5px 10px
+    background-color: white
+    font-size: 12px
+    font-weight: normal
+    border: 1px solid $main-color
+    border-radius: 7px
 
 // side menu
 
 .orders__block
 
 .orders__menu
+    min-width: 220px
 
 .transport__list-header
 
 .orders__menu-list
 
-.orders__menu-item
+.orders__menu-item:not(:first-child)
+    cursor: pointer
+    margin-bottom: 20px
+    transition: all 2ms easy
+
+.orders__menu-item:not(:first-child):hover
+    color: $main-color
 
 .order__menu-link
+
+#user
+    font-weight: bold
 
 
 // orders

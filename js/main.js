@@ -2,98 +2,317 @@
 
 //GlOBAL VARIABLES
 
-let numbers = '01234567890',
-    symbols = '!#@$%^&*()_-+=§<>?/,.\|';
-    passwordStopper = 0;
-
-let driverList = [{
-      truckName: "Eagle1",
-      truckDriver: "Vasiliy Zhernenkov",
-      truckNumber: "AX1023BT",
-      truckLocation: "Buenos Aires",
-      truckType: "TILT"
-    }];
 
 // LOGIN & REGISTRATION
 
-if (document.title == "Login" || document.title == "Register") {
-
-const FORM_BUTTON = document.querySelector('.form__button');
-
-FORM_BUTTON.addEventListener('click', validateLogReg);
-
-document.getElementById('password').addEventListener('input', validatePassword);
+if (document.title == "Register"){
 
 
-}
+  let FORM_BUTTON = document.querySelector('.form__button');
+  let password = document.getElementById('password');
 
-// TRANSPORTATION
+  FORM_BUTTON.addEventListener('click', validateRegistration);
 
-if (document.title == "Transport") {
-
-  createDriverList(driverList);
-
-  const FORM = document.getElementById('transport__form');
-
-  FORM.addEventListener('submit', function (e) {
-    let newDriver = addDriver(e);
-    driverList.push(newDriver);
-    createDriverList(driverList);
+  password.addEventListener('input', function(e) {
+    let password = e.target.value;
+    validatePassword(password);
   });
 
-  const SEARCH =  document.querySelector('.transport__search');
 
-  SEARCH.addEventListener('input', searchTruck);
+};
+
+if (document.title == "Login") {
+  const FORM_BUTTON = document.querySelector('.form__button');
+  FORM_BUTTON.addEventListener('click', validateLogin);
+};
+
+
+// CARRIER CABINET
+
+if (document.title == "Orders" || document.title == "Orders") {
+  activeUser();
+}
+
+if (document.title == "Fleet") {
+
+  createTruckList();
+
+  const FORM = document.getElementById('transport__form');
+  const DELETE_BUTTONS = document.querySelectorAll('.transport__delete');
+
+  DELETE_BUTTONS.forEach(el => {
+    el.addEventListener('click', deleteTruck);
+  })
+
+  FORM.addEventListener('submit', function (e) {
+    e.preventDefault();
+    let newTruck = createTruck();
+    addTruckToUserTruckList(newTruck);
+    createTruckList();
+    e.target.reset();
+  });
 
 }
- 
-// FUNCTIONS
 
-function validateLogReg (e) {
 
+})();
+
+//CLASSES
+
+class Order {
+  constructor (id, from, to, truckType, cargo, loadingDate, arrivalDate, price) {
+    this.id = id,
+    this.from = from,
+    this.to = to,
+    this.truckType = truckType,
+    this.cargo = cargo,
+    this.loadingDate = loadingDate,
+    this.arrivalDate = arrivalDate,
+    this.price = price
+  }
+}
+
+class User {
+  constructor (name, phone, email, password) {
+    this.name = name,
+    this.phone = phone,
+    this.email = email,
+    this.password = password,
+    this.trucks = [],
+    this.currentSession = false,
+    this.orders = {
+      active: [],
+      completed: [],
+      declined: []
+    }
+  }
+}
+
+class Truck {
+  constructor (name, driver, number, location, type) {
+    this.name = name,
+    this.driver = driver,
+    this.number = number,
+    this.location = location,
+    this.type = type,
+    this.scoring = 'Unverified'
+  }
+};
+
+//FUNCTIONS
+
+function deleteTruck (e) {
+  if (confirm('Are you sure, that you want to delete your truck?')) {
+    let user = takeActiveUserFromLocalStorage(),
+        currentTruckCard = e.target.closest('.transport__item'),
+        truckName = currentTruckCard.querySelector('.truck__name').textContent;
+        user.trucks = user.trucks.filter(el => el.name !== truckName);
+    
+    createUser(user);
+    createTruckList();
+  };
+}
+
+function addTruckToUserTruckList (truck) {
+  let user = takeActiveUserFromLocalStorage();
+  user.trucks.push(truck);
+  createUser(user);
+}
+
+function takeActiveUserFromLocalStorage () {
+  let users = takeUsersFromLocalStorage();
+
+  return users.filter(el => el.currentSession)[0];
+}
+
+function takeUsersFromLocalStorage () {
+  let users = [];
+
+  for (let i = 0; i < localStorage.length; i++) {
+    let key = localStorage.key(i);
+    users.push(JSON.parse(localStorage.getItem(key)));
+  };
+
+  return users;
+}
+
+function activeUser () {
+  let users = takeUsersFromLocalStorage(),
+      userLabel = document.getElementById('user');
+
+  let currentUser = users.filter(el => el.currentSession == true);
+
+  userLabel.textContent = currentUser[0].name;
+}
+
+function activateSession (user) {
+  user.currentSession = true;
+  return user
+}
+
+function cancelSession(user) {
+  user.currentSession = false;
+  return user
+}
+
+function checkUserInLocalStorage (user) {
+  return localStorage.getItem(user.email) ? true : false;
+}
+
+function logOutAllUsers () {
+  let users = takeUsersFromLocalStorage();
+
+  users.map(el => {
+    cancelSession(el);
+  });
+
+  localStorage.clear();
+
+  users.forEach(el => {
+    createUser(el);
+  })
+}
+
+function createUser (user) {
+  localStorage.setItem(user.email, JSON.stringify(user));
+};
+
+function checkLoginUser (email, password) {
+  let user = localStorage.getItem(email);
+
+  if (user) {
+    if (user.password == password) {
+      logOutAllUsers();
+      localStorage.setItem(user.email, JSON.stringify(user));
+      redirect('../orders/');
+    }
+  } else {
+    alert("Invalid email or password");
+  }
+}
+
+function checkLocalStorage (key) {
+  if (localStorage.getItem(key)) {
+    return true;
+  }
+  return false;
+}
+
+function createTruck () {
+
+  let name = document.querySelector('#truck__name').value,
+      driver = document.querySelector('#truck__driver').value,
+      number = document.querySelector('#truck__number').value,
+      location = document.querySelector('#truck__location').value,
+      type = [...document.querySelectorAll('.form__radio')].filter(el => el.checked)[0].id;
+  
+  let truck = new Truck (name, driver, number, location, type);
+  
+  return truck;
+};
+
+function createTruckList () {
+  let user = takeActiveUserFromLocalStorage();
+  let trucks = user.trucks;
+  let list = document.querySelector('.transport__list');
+  let cards = ''
+  list.innerHTML = "";
+
+  trucks.forEach(el => {
+    cards += `<li class="transport__item">
+                <div class="transport__card">
+                <div class="transport__information">
+                  <div class="information__item">
+                    <div class="transport__info transport__name">Truck name: <span class="info truck__name">${el.name}</span></div>
+                    <div class="transport__info transport__driver">Driver: <span class="info">${el.driver}</span></div>
+                  </div>
+                  <div class="information__item">
+                    <div class="transport__info transport__number">Number: <span class="info">${el.number}</span></div>
+                    <div class="transport__info transport__type">Type: <span class="info">${el.type}</span></div>
+                  </div>
+                  <div class="information__item">
+                    <div class="transport__info transport__location">Current location: <span class="info">${el.location}</span></div>
+                    <div class="transport__info transport__location">Scoring status: <span class="info">${el.scoring}</span></div>
+                  </div>
+                  <div class="information__item">
+                    <button class="transport__info transport__button transport__delete">Delete</button>
+                    <button class="transport__info transport__button transport__edit">Edit</button>
+                  </div>
+                </div>
+              </div>
+            </li>`
+  });
+
+  list.innerHTML = cards;
+}; 
+
+function validateLogin (e) {
   e.preventDefault();
   
   let email = document.getElementById('email').value ,
       password = document.getElementById('password').value;
+
+      checkLoginUser(email, password);
+};
+
+function validateRegistration (e) {
+
+  e.preventDefault();
   
-  if (e.target.id == 'register') {
-    let name = document.getElementById('name').value,
-        tel = document.getElementById('phone').value;
+  let email = document.getElementById('email').value ,
+      password = document.getElementById('password').value,
+      name = document.getElementById('name').value,
+      tel = document.getElementById('phone').value;
+      form = document.getElementById('form__register');
+      
     
     validateStr(name, 'name');
     validateEmail(email, 'email');
     validatePhone(tel, 'phone');
+    validatePassword(password);
 
-    if (passwordStopper && password) {
-      let checkMassive = document.querySelectorAll(".active")
-      console.log(checkMassive);
+    let user = new User (name, tel, email, password);
 
-      if (checkMassive.length == 0) {
-        window.location.href = '../orders/';
-      }
+    if (checkErrors(form) && !checkUserInLocalStorage(user)) {
+      logOutAllUsers();
+      activateSession(user);
+      createUser (user);
+      redirect('../orders/');
     }
-
-
-  } else if (e.target.id == 'login') {
-    let admin = {
-      email: "admin@gmail.com",
-      password: "admin"
-    }
-
-    if (password == admin.password && email == admin.email) {
-      window.location.href = '../orders/';
-    };
-  }
-  
 };
 
+function checkErrors(form) {
+  let arr = form.querySelectorAll(".active");
+
+  if (arr.length == 0) return true;
+
+  return false;
+}
+
+function checkNumber (str) {
+  let numbers = '01234567890';
+
+  return str.split('').filter(el => numbers.includes(el)).length > 0;
+}
+
+function checkSymbol (str) {
+  let symbols = '!#@$%^&*()_-+=§<>?/,.\|';
+
+  return str.split('').filter(el => symbols.includes(el)).length > 0;
+}
+
+function redirect (link) {
+  window.location.href = `${link}`;
+}
+
 function validateStr (name, id) {
+
   let errors = '';
 
-  if (name.split('').filter(e => numbers.includes(e) || symbols.includes(e)).length > 0) errors += "Name shouldn't contains any number or symbol. ";
+  if (checkNumber(name) || checkSymbol(name)) errors += "Name shouldn't contains any number or symbol. ";
   if (name.length <= 2) errors += "Length shoud be more than 2 letters. "
   
-  message (errors, id)  
+  message (errors, id);  
 };
 
 function validateEmail (email, id) {
@@ -107,65 +326,58 @@ function validateEmail (email, id) {
 
 function validatePhone (tel, id) {
   let errors = '';
+  let numbers = '01234567890';
 
   if (tel.split('').filter(e => numbers.includes(e)).length !== tel.length || tel.length == 0 || tel.length > 10) errors += "Incorrect number";
 
   message(errors, id);
 };
 
-function validatePassword (e) {
-  
-  let counter = 0;
-  
-  let password = e.target.value,
-      bigLetter = document.querySelector('.big-letter'),
+function validatePassword (password) {
+
+  let bigLetter = document.querySelector('.big-letter'),
       length = document.querySelector('.length'),
       number = document.querySelector('.number'),
       symbol = document.querySelector('.symbols');
-
-
-
-  if (password.toLowerCase() == password) {
-
-    bigLetter.style.color = 'red';
-    counter++;
   
-  } else {
-    bigLetter.style.color = 'green';
-  }
-  
-  if (password.split('').filter(e => symbols.includes(e)).length == 0) {
-    symbol.style.color = 'red';
-    counter++;
-  } else {
-    symbol.style.color = 'green';
-  }
-  
-  if (password.length < 8) {
-    length.style.color = 'red';
-    counter++;
-  } else {
-    length.style.color = 'green';
-  }
-  
-  if (password.split('').filter(e => numbers.includes(e)).length == 0) {
-    number.style.color = 'red';
-    counter++;
-  } else {
-    number.style.color = 'green';
-  }
-
   if (!password) {
+    message('This field is required', 'password');
     bigLetter.style.color = 'black';
     symbol.style.color = 'black';
     length.style.color = 'black';
     number.style.color = 'black';
-  }
+  };
 
-  if (counter > 0) {
-    passwordStopper = 0;
+  if (password.toLowerCase() == password) {
+    bigLetter.style.color = 'red';
+    bigLetter.classList.add('active');
   } else {
-    passwordStopper = 1;
+    bigLetter.style.color = 'green';
+    bigLetter.classList.remove('active');
+  }
+  
+  if (!checkSymbol(password)) {
+    symbol.style.color = 'red';
+    symbol.classList.add('active');
+  } else {
+    symbol.style.color = 'green';
+    symbol.classList.remove('active');
+  }
+  
+  if (password.length < 8) {
+    length.style.color = 'red';
+    length.classList.add('active');
+  } else {
+    length.style.color = 'green';
+    length.classList.remove('active');
+  }
+  
+  if (!checkNumber(password)) {
+    number.style.color = 'red';
+    number.classList.add('active');
+  } else {
+    number.style.color = 'green';
+    number.classList.remove('active');
   }
 };
 
@@ -184,58 +396,3 @@ function message (errors, id) {
     }
   }
 }
-
-})();
-
-//FUNCTIONS
-
-// Use Classses
-function addDriver (e) {
-
-  e.preventDefault();
-
-  let Name = document.querySelector('#truck__name').value,
-      Driver = document.querySelector('#truck__driver').value,
-      Number = document.querySelector('#truck__number').value,
-      Location = document.querySelector('#truck__location').value,
-      Type = [...document.querySelectorAll('.form__radio')].filter(el => el.checked)[0].id,
-      newDriver = {
-        truckName: Name,
-        truckDriver: Driver,
-        truckNumber: Number,
-        truckLocation: Location,
-        truckType: Type
-      }
-  
-  document.getElementById('transport__form').reset();
-  return newDriver;
-};
-
-function createDriverList (arr) {
-  let list = document.querySelector('.transport__list');
-  let cards = ''
-  list.innerHTML = "";
-
-  arr.forEach(el => {
-    cards += `<li class="transport__item">
-    <div class="transport__card">
-      <div class="transport__card-header">
-        <h3 class="transport__driver">${el.truckDriver}</h3>
-      </div>
-      <div class="transport__information">
-        <div class="information__item">
-          <div class="transport__info transport__name">Truck name: <span class="info">${el.truckName}</span></div>
-          <div class="transport__info transport__number">Number: <span class="info">${el.truckNumber}</span></div>
-          <div class="transport__info transport__type">Type: <span class="info">${el.truckType}</span></div>
-        </div>
-        <div class="information__item">
-          <div class="transport__info transport__location">Current location: <span class="info">${el.truckLocation}</span></div>
-          <div class="transport__weather">???</div>
-        </div>
-      </div>
-    </div>
-  </li>`
-  });
-
-  list.innerHTML = cards;
-}; 

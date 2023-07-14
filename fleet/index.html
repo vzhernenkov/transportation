@@ -25,8 +25,14 @@
               <li class="side__item">
                 <a href="../finance/" class="side__link">Finance</a>
               </li>
-              <li class="side__item">
+              <li class="side__item side__item_more-margin">
                 <a href="../fleet/" class="side__link link__active">My fleet (demo)</a>
+              </li>
+              <li class="side__item">
+                <div id="user" class="current__user">Vasiliy Zhernenkov</div>
+              </li>
+              <li class="side__item">
+                <a href="../spot/" class="side__link">Log out</a>
               </li>
             </ul>
           </nav>
@@ -76,18 +82,17 @@
             <ul class="transport__list">
               <!-- <li class="transport__item">
                 <div class="transport__card">
-                  <div class="transport__card-header">
-                    <h3 class="transport__driver">Vasiliy Zhernenkov</h3>
-                    <img src="img/truck.jpeg" alt="" class="transport__logo">
-                  </div>
                   <div class="transport__information">
                     <div class="information__item">
-                      <div class="transport__info transport__name">Truck name: <span class="info">Eagle1</span></div>
-                      <div class="transport__info transport__number">Number: <span class="info">AX1023BT</span></div>
-                      <div class="transport__info transport__type">Type: <span class="info">TILT</span></div>
+                      <div class="transport__info transport__name">Truck name: <span class="info">${el.truckName}</span></div>
+                      <div class="transport__info transport__driver">Driver: <span class="info">${el.truckDriver}</span></div>
                     </div>
                     <div class="information__item">
-                      <div class="transport__info transport__location">Current location: <span class="info">Buenos Aires</span></div>
+                      <div class="transport__info transport__number">Number: <span class="info">${el.truckNumber}</span></div>
+                      <div class="transport__info transport__type">Type: <span class="info">${el.truckType}</span></div>
+                    </div>
+                    <div class="information__item">
+                      <div class="transport__info transport__location">Current location: <span class="info">${el.truckLocation}</span></div>
                       <div class="transport__weather">???</div>
                     </div>
                   </div>
