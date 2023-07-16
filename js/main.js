@@ -34,6 +34,7 @@ if (document.title == "Orders" || document.title == "Orders") {
 }
 
 if (document.title == "Fleet") {
+  activeUser();
 
   createTruckList();
 
