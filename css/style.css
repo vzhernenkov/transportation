@@ -383,6 +383,7 @@ main {
 }
 
 .orders__block {
+  width: 100%;
   padding: 30px 0px 30px 30px;
 }
 
@@ -392,16 +393,20 @@ main {
   padding-left: 0px;
 }
 
-.orders__list {
-  width: 85%;
-}
-
 .orders__header {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-bottom: 40px;
   width: 100%;
+}
+
+.orders {
+  display: none;
+}
+
+.active__orders-list {
+  display: block;
 }
 
 .order__cart {
@@ -489,4 +494,14 @@ main {
 .container_less-padding {
   padding-left: 30px;
   padding-right: 30px;
+}
+
+.orders__header, .orders__nav-list {
+  display: flex;
+  flex-direction: row;
+}
+
+.orders__nav-list {
+  justify-content: space-between;
+  min-width: 400px;
 }

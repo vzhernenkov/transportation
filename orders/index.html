@@ -43,25 +43,96 @@
 
       <main class="transport__main">
         <div class="transport__container container container_less-padding">
-          <div class="orders__block orders__menu">
-              <ul class="orders__menu-list">
-                <li class="orders__menu-item">
-                  <h2 class="transport__list-header transport__list-header-margin">Vacant</h2>
-                </li>
-                <li class="orders__menu-item">
-                  <a href="/orders/active/" class="order__menu-link">Active</a>
-                </li>
-                <li class="orders__menu-item">
-                  <a href="/orders/completed/" class="order__menu-link">Completed</a>
-                </li>
-                <li class="orders__menu-item">
-                  <a href="/orders/declined/" class="order__menu-link">Declined</a>
-                </li>
-              </ul>
-          </div>
           <div class="orders__block orders__list">
-            <h2 class="transport__list-header transport__list-header-margin">Orders</h2>
-            <ul class="orders">
+            <div class="orders__header">
+              <h2 class="transport__list-header transport__list-header-margin">Orders</h2>
+              <nav class="orders__nav">
+                <ul class="orders__nav-list">
+                  <li class="orders__nav-item">
+                    <h4 class="orders__navbutton">Vacant</h4>
+                  </li>
+                  <li class="orders__nav-item">
+                    <h4 class="orders__navbutton">Active</h4>
+                  </li>
+                  <li class="orders__nav-item">
+                    <h4 class="orders__navbutton">Completed</h4>
+                  </li>
+                  <li class="orders__nav-item">
+                    <h4 class="orders__navbutton">Declined</h4>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            <ul id="vacant__orders" class="orders active__orders-list">
+              <li class="order__cart">
+                <div class="order__description order__id">AR123</div>
+                <div class="order__direction">
+                  <div class="order__description order__from">Buenos Aires</div>
+                  <div class="order__dash"></div>
+                  <div class="order__description order__to">Cordoba</div>
+                </div>
+                <div class="order__cargo-block">
+                  <div class="order__description order__type">REF 20</div>
+                  <div class="order__description order__cargo">Fruits <span class="order__temperature">+5</span></div>
+                </div>
+                <div class="order__dates">
+                  <div class="order__description order__load-date">10.07.2023</div>
+                  <div class="order__dash"></div>
+                  <div class="order__description order__unload-date">15.07.2023</div>
+                </div>
+                <div class="order__description order__price">2500$</div>
+                <div class="order__buttons">
+                  <button class="order__pick-up-button">More info</button>
+                </div>
+              </li>
+            </ul>
+            <ul id="active__orders" class="orders">
+              <li class="order__cart">
+                <div class="order__description order__id">AR123</div>
+                <div class="order__direction">
+                  <div class="order__description order__from">Buenos Aires</div>
+                  <div class="order__dash"></div>
+                  <div class="order__description order__to">Cordoba</div>
+                </div>
+                <div class="order__cargo-block">
+                  <div class="order__description order__type">REF 20</div>
+                  <div class="order__description order__cargo">Fruits <span class="order__temperature">+5</span></div>
+                </div>
+                <div class="order__dates">
+                  <div class="order__description order__load-date">10.07.2023</div>
+                  <div class="order__dash"></div>
+                  <div class="order__description order__unload-date">15.07.2023</div>
+                </div>
+                <div class="order__description order__price">2500$</div>
+                <div class="order__buttons">
+                  <button class="order__pick-up-button">More info</button>
+                </div>
+              </li>
+            </ul>
+            <ul id="completed__orders" class="orders">
+              <li class="order__cart">
+                <div class="order__description order__id">AR123</div>
+                <div class="order__direction">
+                  <div class="order__description order__from">Buenos Aires</div>
+                  <div class="order__dash"></div>
+                  <div class="order__description order__to">Cordoba</div>
+                </div>
+                <div class="order__cargo-block">
+                  <div class="order__description order__type">REF 20</div>
+                  <div class="order__description order__cargo">Fruits <span class="order__temperature">+5</span></div>
+                </div>
+                <div class="order__dates">
+                  <div class="order__description order__load-date">10.07.2023</div>
+                  <div class="order__dash"></div>
+                  <div class="order__description order__unload-date">15.07.2023</div>
+                </div>
+                <div class="order__description order__price">2500$</div>
+                <div class="order__buttons">
+                  <button class="order__pick-up-button">More info</button>
+                </div>
+              </li>
+            </ul>
+            <ul id="declined__orders" class="orders">
               <li class="order__cart">
                 <div class="order__description order__id">AR123</div>
                 <div class="order__direction">

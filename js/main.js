@@ -29,7 +29,7 @@ if (document.title == "Login") {
 
 // CARRIER CABINET
 
-if (document.title == "Orders" || document.title == "Orders") {
+if (document.title == "Orders") {
   activeUser();
 }
 

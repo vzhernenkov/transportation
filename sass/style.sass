@@ -113,12 +113,8 @@ main
 .side__item_more-margin
     margin-right: 60px
 
-
-.side
-
 .link__active
     color: $main-color
-
 
 .hero__container
     display: flex
@@ -247,13 +243,6 @@ main
     font-size: 10px
     color: red
 
-
-
-// transport page
-
-// .transport__main
-//     height: 91vh
-
 .transport__container
     display: flex
     flex-direction: row
@@ -270,8 +259,6 @@ main
 .list__block
     width: 70%
 
-// .transport__add-panel
-//     width: 80%
 .transport__list-header
     font-size: 35px
     
@@ -343,10 +330,6 @@ main
 .orders__menu
     min-width: 220px
 
-.transport__list-header
-
-.orders__menu-list
-
 .orders__menu-item:not(:first-child)
     cursor: pointer
     margin-bottom: 20px
@@ -364,6 +347,7 @@ main
 // orders
 
 .orders__block
+    width: 100%
     padding: 30px 0px 30px 30px
 
 .orders__menu
@@ -371,27 +355,19 @@ main
     border-right: 1px solid $main-color
     padding-left: 0px
 
-.orders__list
-    width: 85%
-.orders__block
-.orders__list
-.transport__list-header
 .orders__header
     display: flex
     flex-direction: row
     align-items: center
     margin-bottom: 40px
     width: 100%
-.order__cards-header
-.order__cards-header-id
-.order__direction
-.order__cards-header-from
-.order__cards-header-to
-.order__cards-header-truck-type
-.order__cards-header-cargo
-.order__cards-header-load
-.order__cards-header-arrival
+
 .orders
+    display: none
+
+.active__orders-list
+    display: block
+
 .order__cart
     padding: 20px
     border: 1px solid $main-color
@@ -430,16 +406,12 @@ main
     justify-content: space-between
     width: 20%
     
-.order__from
-.order__to
 .order__type
     font-weight: 300
     margin-right: 10px
 .order__cargo
     font-weight: 300
-.order__temperature
-.order__load-date
-.order__unload-date
+
 .order__more-info-button
     background-color: white
     border: 1px solid black
@@ -462,3 +434,11 @@ main
 .container_less-padding
     padding-left: 30px
     padding-right: 30px
+
+.orders__header, .orders__nav-list
+    display: flex
+    flex-direction: row
+
+.orders__nav-list
+    justify-content: space-between
+    min-width: 400px
