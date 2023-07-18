@@ -384,7 +384,7 @@ main {
 
 .orders__block {
   width: 100%;
-  padding: 30px 0px 30px 30px;
+  padding: 30px 0px 30px 0px;
 }
 
 .orders__menu {
@@ -511,12 +511,42 @@ main {
 .orders__navbutton {
   cursor: pointer;
   font-size: 25px;
+  padding: 15px 15px;
 }
 
 .navbutton-active {
   background-color: #1A65DE;
   border: none;
   color: white;
-  padding: 10px 10px;
   border-radius: 10px;
+}
+
+.more__transport-margin {
+  margin-bottom: 40px;
+}
+
+.search__input, .search__select {
+  width: 200px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 7px;
+  border: 1px solid #1A65DE;
+}
+
+.transport__search_bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 500px;
+}
+
+.search__button {
+  text-align: center;
+  border: 1px solid #1A65DE;
+  padding: 7px 15px;
+  border-radius: 7px;
+  font-size: 15px;
+  background-color: #1A65DE;
+  color: white;
+  cursor: pointer;
 }

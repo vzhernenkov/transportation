@@ -18,7 +18,6 @@ if (document.title == "Register"){
     validatePassword(password);
   });
 
-
 };
 
 if (document.title == "Login") {
@@ -31,6 +30,18 @@ if (document.title == "Login") {
 
 if (document.title == "Orders") {
   activeUser();
+  const TAB_BUTTONS = document.querySelector(".orders__nav-list");
+  
+  TAB_BUTTONS.addEventListener('click', function (e) {
+    let target = e.target;
+    if (target.classList.contains('orders__navbutton') && target) {
+      removeClassFromTabButtons ();
+      tabActiveButton(target);
+      hideAllTabs ();
+      showOrderList (target.textContent);      
+    }
+  })
+
 }
 
 if (document.title == "Fleet") {
@@ -38,12 +49,23 @@ if (document.title == "Fleet") {
 
   createTruckList();
 
-  const FORM = document.getElementById('transport__form');
-  const DELETE_BUTTONS = document.querySelectorAll('.transport__delete');
+  let FORM = document.getElementById('transport__form');
+  let truckList = document.querySelector('.transport__list');
+  let searchButton = document.querySelector('.search__button');
 
-  DELETE_BUTTONS.forEach(el => {
-    el.addEventListener('click', deleteTruck);
+  searchButton.addEventListener('click', function(e) {
+    let filteredList = filterTrucks();
+    createFilteredList(filteredList);
   })
+
+  truckList.addEventListener('click', function (e) {
+    let target = e.target;
+
+    if (target.classList.contains('transport__delete') && target) {
+      deleteTruck(target);
+    }
+  })
+
 
   FORM.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -54,7 +76,6 @@ if (document.title == "Fleet") {
   });
 
 }
-
 
 })();
 
@@ -102,10 +123,79 @@ class Truck {
 
 //FUNCTIONS
 
-function deleteTruck (e) {
+function filterTrucks () {
+  let trucks = takeActiveUserFromLocalStorage().trucks;
+  let searchOption = document.querySelector('#truck__filter').value;
+  let searchInfo = document.querySelector('.search__input').value;
+  
+  return trucks.filter(el => {
+      return el[searchOption].includes(searchInfo);
+  }) 
+};
+
+function createFilteredList (trucks) {
+  let list = document.querySelector('.transport__list');
+  let cards = ''
+  list.innerHTML = "";
+
+  trucks.forEach(el => {
+    cards += `<li class="transport__item">
+                <div class="transport__card">
+                <div class="transport__information">
+                  <div class="information__item">
+                    <div class="transport__info transport__name">Truck name: <span class="info truck__name">${el.name}</span></div>
+                    <div class="transport__info transport__driver">Driver: <span class="info">${el.driver}</span></div>
+                  </div>
+                  <div class="information__item">
+                    <div class="transport__info transport__number">Number: <span class="info">${el.number}</span></div>
+                    <div class="transport__info transport__type">Type: <span class="info">${el.type}</span></div>
+                  </div>
+                  <div class="information__item">
+                    <div class="transport__info transport__location">Current location: <span class="info">${el.location}</span></div>
+                    <div class="transport__info transport__location">Scoring status: <span class="info">${el.scoring}</span></div>
+                  </div>
+                  <div class="information__item">
+                    <button class="transport__info transport__button transport__delete">Delete</button>
+                    <button class="transport__info transport__button transport__edit">Edit</button>
+                  </div>
+                </div>
+              </div>
+            </li>`
+  });
+
+  list.innerHTML = cards;
+}
+
+function tabActiveButton(button) {
+  button.classList.add('navbutton-active')
+};
+
+function removeClassFromTabButtons () {
+  let buttons = document.querySelectorAll('.orders__navbutton');
+  
+  buttons.forEach(el => {
+    el.classList.remove('navbutton-active');
+  })
+};
+
+function hideAllTabs () {
+  let tabs = document.querySelectorAll('.orders');
+
+  tabs.forEach(el => {
+    el.classList.remove('active__orders-list');
+  })
+};
+
+function showOrderList (id) {
+  let element = document.getElementById(`${id}`);
+
+  element.classList.add('active__orders-list');
+}
+
+function deleteTruck (truck) {
   if (confirm('Are you sure, that you want to delete your truck?')) {
     let user = takeActiveUserFromLocalStorage(),
-        currentTruckCard = e.target.closest('.transport__item'),
+        currentTruckCard = truck.closest('.transport__item'),
         truckName = currentTruckCard.querySelector('.truck__name').textContent;
         user.trucks = user.trucks.filter(el => el.name !== truckName);
     
@@ -179,11 +269,12 @@ function createUser (user) {
 };
 
 function checkLoginUser (email, password) {
-  let user = localStorage.getItem(email);
+  let user = JSON.parse(localStorage.getItem(email));
 
   if (user) {
     if (user.password == password) {
       logOutAllUsers();
+      activateSession(user);
       localStorage.setItem(user.email, JSON.stringify(user));
       redirect('../orders/');
     }

@@ -43,7 +43,7 @@
         <div class="transport__container container container_less-padding">
           <div class="transport__block add__block">
             <div class="transport__add-panel">
-              <h2 class="transport__list-header transport__list-header-margin">Add your truck</h2>
+              <h2 class="transport__list-header more__transport-margin">Add your truck</h2>
               <form action="#" method="post" id="transport__form" class="transport__form">
                 <div class="form__group">
                   <label class="form__error-label label-for-name" for="name"></label>
@@ -77,7 +77,17 @@
           <div class="transport__block list__block">
             <div class="trasport__search-bar">
               <h2 class="transport__list-header">Your fleet</h2>
-              <input type="search" placeholder="Search" class="transport__search">
+              <div class="transport__search_bar">
+                <select class="search__select" name="truck__filter" id="truck__filter">
+                  <option value="">Choose a search option</option>
+                  <option value="name">Name</option>
+                  <option value="driver">Driver</option>
+                  <option value="number">Number</option>
+                  <option value="location">Location</option>
+                </select>
+                <input class="search__input" type="search" placeholder="">
+                <button class="search__button">Search</button>
+              </div>
             </div>
             <ul class="transport__list">
               <!-- <li class="transport__item">
