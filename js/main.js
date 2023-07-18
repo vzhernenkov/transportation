@@ -53,11 +53,13 @@ if (document.title == "Fleet") {
   let truckList = document.querySelector('.transport__list');
   let searchButton = document.querySelector('.search__button'),
       editButton = document.querySelector('.edit__button'),
-      cancelButton = document.querySelector('.cancel__button');
+      cancelButton = document.querySelector('.cancel__button'),
+      addButton = document.querySelector('.add__button');
 
   
 editButton.addEventListener('click', function (e) {
  edit();
+ FORM.reset();
 });
 
 cancelButton.addEventListener('click', function (e) {
@@ -84,16 +86,13 @@ cancelButton.addEventListener('click', function (e) {
     }
   })
 
-  FORM.addEventListener('submit', function (e) {
+  addButton.addEventListener('click', function (e) {
     e.preventDefault();
     let target = e.target;
-
-    if (target.classList.contains('add__button')) {
       let newTruck = createTruck();
       addTruckToUserTruckList(newTruck);
       createTruckList();
-      e.target.reset();
-    };
+      FORM.reset();
   });
 
 }
@@ -217,15 +216,33 @@ function edit () {
       number = document.querySelector('#truck__number').value,
       location = document.querySelector('#truck__location').value,
       type = [...document.querySelectorAll('.form__radio')].filter(el => el.checked)[0],
-      editTruck = document.querySelector('.check'),
-      filterList = [],
-      user = takeActiveUserFromLocalStorage().trucks;
+      editTruck = document.querySelector('.check');
 
-
-      //removeEditTruck();
-    
-
+  editTruckInformation(editTruck, name, driver, number, location, type);
+  removeEditForm();
+  createTruckList();
 };
+
+function editTruckInformation (truck, newname, newdriver, newnumber, newlocation, newtype) {
+  let currentTruckName = truck.querySelector('.truck__name').textContent,
+      user = takeActiveUserFromLocalStorage();
+  user.trucks.map(el => {
+    if (el.name == currentTruckName) {
+      if(newname) el.name = newname;
+      if(newdriver) el.driver = newdriver;
+      if(newnumber) el.number = newnumber;
+      if(newlocation) el.location = newlocation;
+      if(newtype) el.type = newtype;
+    }
+  })
+
+  createUser(user);
+}
+
+function createTruckItem (currentTruck, newData) {
+
+}
+
 
 function filterTrucks () {
   let trucks = takeActiveUserFromLocalStorage().trucks;
