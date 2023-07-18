@@ -51,7 +51,20 @@ if (document.title == "Fleet") {
 
   let FORM = document.getElementById('transport__form');
   let truckList = document.querySelector('.transport__list');
-  let searchButton = document.querySelector('.search__button');
+  let searchButton = document.querySelector('.search__button'),
+      editButton = document.querySelector('.edit__button'),
+      cancelButton = document.querySelector('.cancel__button');
+
+  
+editButton.addEventListener('click', function (e) {
+ edit();
+});
+
+cancelButton.addEventListener('click', function (e) {
+  removeEditForm();
+  removeEditTruck();
+})
+  
 
   searchButton.addEventListener('click', function(e) {
     let filteredList = filterTrucks();
@@ -64,15 +77,23 @@ if (document.title == "Fleet") {
     if (target.classList.contains('transport__delete') && target) {
       deleteTruck(target);
     }
-  })
 
+    if (target.classList.contains('transport__edit') && target) {
+      showEditTruck(target)
+      showEditForm()
+    }
+  })
 
   FORM.addEventListener('submit', function (e) {
     e.preventDefault();
-    let newTruck = createTruck();
-    addTruckToUserTruckList(newTruck);
-    createTruckList();
-    e.target.reset();
+    let target = e.target;
+
+    if (target.classList.contains('add__button')) {
+      let newTruck = createTruck();
+      addTruckToUserTruckList(newTruck);
+      createTruckList();
+      e.target.reset();
+    };
   });
 
 }
@@ -122,6 +143,89 @@ class Truck {
 };
 
 //FUNCTIONS
+
+function showEditTruck (truck) {
+  let currentTruckCard = truck.closest('.transport__item');
+
+  removeEditTruck();
+  currentTruckCard.style.border = "2px solid red";
+  currentTruckCard.classList.add('check');
+};
+
+function showEditForm () {
+  let header = document.querySelector('.transport__list-header'),
+      editButton = document.querySelector('.edit__button'),
+      cancelButton = document.querySelector('.cancel__button'),
+      addButton = document.querySelector('.add__button');
+      inputs = document.querySelectorAll('.form__input');
+      radio = document.querySelectorAll('.form__radio');
+
+  inputs.forEach(el => {
+    el.required = false;
+  });
+
+
+  radio.forEach(el => {
+    el.required = false;
+  });
+
+
+  editButton.style.display = 'inline-block';
+  cancelButton.style.display = 'inline-block';
+  addButton.style.display = 'none';
+
+  header.textContent = "Enter new info";
+};
+
+function removeEditTruck () {
+  let allCards = document.querySelectorAll('.transport__item');
+
+  allCards.forEach(el => {
+    el.style.border = "";
+    el.classList.remove('check');
+  })
+};
+
+function removeEditForm () {
+  let header = document.querySelector('.transport__list-header'),
+  editButton = document.querySelector('.edit__button'),
+  cancelButton = document.querySelector('.cancel__button'),
+  addButton = document.querySelector('.add__button');
+  inputs = document.querySelectorAll('.form__input');
+  radio = document.querySelectorAll('.form__radio');
+
+inputs.forEach(el => {
+el.required = true;
+});
+
+
+radio.forEach(el => {
+el.required = true;
+});
+
+
+editButton.style.display = 'none';
+cancelButton.style.display = 'none';
+addButton.style.display = 'block';
+
+header.textContent = "Add your truck";
+};
+
+function edit () {
+  let name = document.querySelector('#truck__name').value,
+      driver = document.querySelector('#truck__driver').value,
+      number = document.querySelector('#truck__number').value,
+      location = document.querySelector('#truck__location').value,
+      type = [...document.querySelectorAll('.form__radio')].filter(el => el.checked)[0],
+      editTruck = document.querySelector('.check'),
+      filterList = [],
+      user = takeActiveUserFromLocalStorage().trucks;
+
+
+      //removeEditTruck();
+    
+
+};
 
 function filterTrucks () {
   let trucks = takeActiveUserFromLocalStorage().trucks;
