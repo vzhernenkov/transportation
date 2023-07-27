@@ -101,36 +101,108 @@ cancelButton.addEventListener('click', function (e) {
 
 //CLASSES
 
+class Company {
+  constructor (registerNumber) {
+    this.registerNumber = registerNumber,
+    this.users = [],
+    this.trucks = [],
+    this.trailers = [],
+    this.drivers = [],
+    this.orders = {
+      active: [],
+      completed: [],
+      declined: []
+    }
+    this.scoring = 'Checking'
+  }
+}
+
 class Order {
-  constructor (id, from, to, truckType, cargo, loadingDate, arrivalDate, price) {
-    this.id = id,
+  constructor (from, to, truckType, cargo, loadingDate, arrivalDate, price) {
+    this.id = null,
     this.from = from,
     this.to = to,
     this.truckType = truckType,
     this.cargo = cargo,
     this.loadingDate = loadingDate,
     this.arrivalDate = arrivalDate,
-    this.price = price
+    this.shipper = {
+      company: null,
+      user: null,
+      truckType: null,
+      driver: null,
+      truck: null,
+      trail: null,
+      financeShipper: {
+        "price": price,
+        paymentDate: null,
+        paymentType: null,
+        documentStatus: null,
+        paymentStatus: null,
+      }
+    },
+    this.carrier = {
+      company: null,
+      user: null,
+      financeCarrier: {
+        "price": price,
+        paymentDate: null,
+        paymentType: null,
+        documentStatus: null,
+        paymentStatus: null, 
+      }
+    }
   }
 }
 
 class User {
-  constructor (name, phone, email, password) {
+  constructor (name, phone, email, password, firstName = '', lastName = '') {
+    this.firstName = firstName,
+    this.lastName = lastName,
     this.name = name,
     this.phone = phone,
     this.email = email,
     this.password = password,
     this.trucks = [],
+    this.trailers = [],
+    this.drivers = [],
+    this.company = 'n/a',
+    this.status = 'carrier',
+    this.access = {},
+    this.id = null,
     this.currentSession = false,
     this.orders = {
       active: [],
       completed: [],
       declined: []
-    }
+    },
+    this.settings = {}
   }
 }
 
 class Truck {
+  constructor (name, driver, number, location, type) {
+    this.name = name,
+    this.driver = driver,
+    this.number = number,
+    this.location = location,
+    this.type = type,
+    this.scoring = 'Unverified'
+  }
+};
+
+class Trail {
+  constructor (name, driver, number, location, type) {
+    this.name = name,
+    this.driver = driver,
+    this.number = number,
+    this.location = location,
+    this.type = type,
+    this.scoring = 'Unverified'
+  }
+};
+
+class Driver {
   constructor (name, driver, number, location, type) {
     this.name = name,
     this.driver = driver,
@@ -238,11 +310,6 @@ function editTruckInformation (truck, newname, newdriver, newnumber, newlocation
 
   createUser(user);
 }
-
-function createTruckItem (currentTruck, newData) {
-
-}
-
 
 function filterTrucks () {
   let trucks = takeActiveUserFromLocalStorage().trucks;

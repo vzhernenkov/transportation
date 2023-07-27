@@ -124,6 +124,11 @@ main {
   color: #1A65DE;
 }
 
+.main {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .hero__container {
   display: flex;
   flex-direction: row;
@@ -131,6 +136,7 @@ main {
   align-items: center;
   height: 90vh;
   padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .hero__item {
@@ -268,6 +274,10 @@ main {
   left: 15px;
   font-size: 10px;
   color: red;
+}
+
+.forms__name-group {
+  display: flex;
 }
 
 .transport__container {
