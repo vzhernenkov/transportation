@@ -10,7 +10,7 @@ let overlay = document.querySelector('.overlay');
 
 overlay.addEventListener('click', function (e) {
   let target = e.target;
-  console.log(target);
+  //console.log(target);
   if (target.textContent == 'Log out') {
     e.preventDefault();
     if (confirm('Are you sure, that you want to log out?')) {
@@ -127,11 +127,15 @@ cancelButton.addEventListener('click', function (e) {
     }
   })
 
-  addButton.addEventListener('click', function (e) {
+  addButton.addEventListener('click', async function (e) {
     e.preventDefault();
-      let newTruck = createTruck();
-      addTruckToCompanyTruckList(newTruck);
+     let newTruck = createTruck();
+     let respond = await addTruckToCompanyTruckList(newTruck);
+     if(respond.status == 200) {
       createTruckList();
+     } else {
+       alert('Something went wrong. Try again later')
+     }
       //FORM.reset();
   });
 
@@ -526,14 +530,27 @@ async function deleteTruck (truck) {
 async function addTruckToCompanyTruckList (truck) {
   let company = await getCurrentCompany().then(data => data);
   company.trucks.push(truck);
+  let payload = {
+    registerNumber: company.registerNumber,
+    trucks: company.trucks
+  }
 
-  fetch("http://localhost:3333/carrier", {
+  let res = await fetch("http://localhost:3333/carrier", {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(company)
+    body: JSON.stringify(payload)
   })
+  return res
+  // fetch(`http://localhost:3333/carrier/${company.registerNumber}/trucks`, {
+  //   method: 'PUT',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify(truck)
+  // })
+
 }; //CHECK
 
 //Orders

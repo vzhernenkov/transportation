@@ -198,13 +198,34 @@ app.get("/orders", (req, res) => {
 });
 
 app.patch("/carrier", (req, res) => {
-  let carrier = req.body;
-  let carrierId = carrier.registerNumber;
-  let index = carriers.find(el => el.registerNumber == carrierId);
-  carriers[index] = {
-    ...(carriers[index]||{}), ...carrier
-  };
-  res.send();
+  let payload = req.body;
+  let {key} = req.query;
+  console.log({payload})
+  let carrierId = payload.registerNumber;
+  let index = carriers.findIndex(el => el.registerNumber == carrierId);
+  if(key){
+    carriers[index][key] = payload[key]
+  }else{
+    carriers[index] = {
+      ...(carriers[index] || {}), ...payload
+    }; 
+  }
+  console.log({carriers})
+  res.status(200).json('ok');
+})
+app.put("/carrier/:registerNumber/:key/", (req, res) => {
+  let payload = req.body;
+  let {key, registerNumber} = req.params;
+  console.log({payload})
+  let index = carriers.findIndex(el => el.registerNumber === registerNumber);
+  let indexOfValues = carriers[index][key].findIndex(el => el.id === payload.id);
+  if(indexOfValues > -1){
+    carriers[index][key][indexOfValues] = payload
+  }else{
+    carriers[index][key].push(payload)
+  }
+  console.log({carriers})
+  res.status(200).json('ok');
 })
 
 app.listen(port, () => {
