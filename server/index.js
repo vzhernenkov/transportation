@@ -227,6 +227,19 @@ app.put("/carrier/:registerNumber/:key/", (req, res) => {
   console.log({carriers})
   res.status(200).json('ok');
 })
+app.delete("/carrier/:registerNumber/:key/:id", (req, res) => {
+  let {key, registerNumber, id} = req.params;
+  console.log({key, registerNumber, id})
+  let index = carriers.findIndex(el => el.registerNumber === registerNumber);
+  let indexOfValues = carriers[index][key].findIndex(el => el.id === id);
+  if(indexOfValues > -1){
+    carriers[index][key].splice(indexOfValues, 1)
+    res.status(200).json('ok');
+  }else{
+    res.status(404).json('not found');
+  }
+  console.log({carriers})
+})
 
 app.listen(port, () => {
   console.log('server is running');
