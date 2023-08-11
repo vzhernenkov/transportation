@@ -202,7 +202,7 @@ app.patch("/carrier", (req, res) => {
   let carrierId = carrier.registerNumber;
   let index = carriers.find(el => el.registerNumber == carrierId);
   carriers[index] = {
-    ...carriers[index], ...carrier
+    ...(carriers[index]||{}), ...carrier
   };
   res.send();
 })
