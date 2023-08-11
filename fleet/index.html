@@ -10,34 +10,48 @@
 </head>
 <body>
   <div class="overlay">
-      <header class="header transport__header">
-        <div class="container container_less-padding">
-          <h1 class="visually-hidden">Spot transportation managment system</h1>
-          <nav class="header__nav">
-            <a href="../orders/" class="header__logo">
-              <span class="header__logo-text">SPOT</span>
-              <span class="header__logo-round"></span>
-            </a>
-            <ul class="side__list">
+    <header class="header transport__header">
+      <div class="container container_less-padding">
+        <h1 class="visually-hidden">Spot transportation managment system</h1>
+        <nav class="header__nav">
+          <a href="../orders/" class="header__logo">
+            <span class="header__logo-text">SPOT</span>
+            <span class="header__logo-round"></span>
+          </a>
+
+            <ul class="side__list menu__list">
               <li class="side__item">
-                <a href="../orders/" class="side__link">Orders</a>
+                <a href="../orders/" class="side__link menu__link">Orders</a>
+
               </li>
               <li class="side__item">
-                <a href="../finance/" class="side__link">Finance</a>
+                <a href="../finance/" class="side__link menu__link">Finance</a>
               </li>
               <li class="side__item side__item_more-margin">
-                <a href="../fleet/" class="side__link link__active">My fleet (demo)</a>
+                <p class="side__link menu__link link__active">My company</p>
+                <ul class="sub__menu-list">
+                  <li>
+                    <a href="" class="sub__menu-link">Company account</a>
+                  </li>
+                  <li>
+                    <a href="../fleet/" class="sub__menu-link">My fleet</a>
+                  </li>
+                  <li>
+                    <a href="" class="sub__menu-link">Settings</a>
+                  </li>
+                </ul>
               </li>
               <li class="side__item">
-                <div id="user" class="current__user">Vasiliy Zhernenkov</div>
+                <div id="user" class="current__user"></div>
               </li>
               <li class="side__item">
-                <a href="../spot/" class="side__link">Log out</a>
+                <a href="../spot/" class="side__link menu__link">Log out</a>
               </li>
             </ul>
-          </nav>
-        </div>
-      </header>
+
+        </nav>
+      </div>
+    </header>
 
       <main class="transport__main">
         <div class="transport__container container container_less-padding">
@@ -46,7 +60,7 @@
               <h2 class="transport__list-header more__transport-margin">Add your truck</h2>
               <form action="#" method="post" id="transport__form" class="transport__form">
                 
-                <div class="form__group forms__name-group">
+                <div class="form__group">
                   <label class="form__error-label label-for-name" for="name"></label>
                   <input required class="form__input" type="text" placeholder="Truck name" id="truck__name">
                 </div>

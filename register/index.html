@@ -27,9 +27,13 @@
           <div class="hero__container container">
             <div class="hero__item">
               <h2 class="form-header">Create new account</h2>
+              <div class="form__switcher">
+                <div class="reg__tab orders__navbutton navbutton-active">Carrier</div>
+                <div class="reg__tab orders__navbutton">Shipper</div>
+              </div>
               <form action="#" method="post" class="hero__form" id="form__register">
 
-                <div class="form__group">
+                <div class="form__group forms__name-group">
                   <label class="form__error-label label-for-name" for="firstname"></label>
                   <input required class="form__input" type="text" placeholder="First name" id="firstname">
                   <input required class="form__input" type="text" placeholder="Last name" id="lastname">
@@ -68,7 +72,7 @@
                   <span class="password__message number">- At least one number</span>
                 </div>
 
-                <a href="../orders/" class="form__button" id="register">Join to the SPOT<span class="header__logo-round header__logo-round_login-edition"></span></a>
+                <button type="submit" class="form__button" id="register">Join to the SPOT<span class="header__logo-round header__logo-round_login-edition"></span></button>
                 <a href="../login/" class="hero__go-to-register">I have an account</a>
               </form>
             

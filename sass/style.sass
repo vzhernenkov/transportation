@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300400500&display=swap');
 
 $main-color: #1A65DE
+$back-color: #f7f7f7
 
 html
     box-sizing: border-box
@@ -21,7 +22,7 @@ body
     font-family: Poppins, sans-serif
     font-weight: 400px
     line-height: 1
-    background-color: #f7f7f7
+    background-color: $back-color
     color: #333333
 
 a
@@ -124,8 +125,6 @@ main
     display: flex
     flex-direction: row
     justify-content: space-between
-    align-items: center
-    height: 90vh
     padding-top: 20px
     padding-bottom: 20px
 
@@ -182,12 +181,12 @@ main
 
 //LOGIN PAGE
 .form-header
-    font-size: 40px
-    margin-bottom: 30px
+    font-size: 35px
+    margin-bottom: 20px
 .hero__form
     display: flex
     flex-direction: column
-    max-width: 400px
+    max-width: 335px
     
 .login__form
     .form__input
@@ -196,8 +195,7 @@ main
 .form__input
     width: 100%
     border: 1px solid grey
-    margin-bottom: 5px
-    padding: 10px 15px
+    padding: 8px 15px
     border-radius: 10px
     font-size: 15px
 
@@ -210,6 +208,7 @@ main
     background-color: $main-color
     color: white
     margin-bottom: 10px
+    cursor: pointer
     
 
 .header__logo-round_login-edition
@@ -228,29 +227,36 @@ main
     margin-bottom: 20px
 
 .password__header
-    font-size: 12px
+    padding-top: 5px
+    font-size: 10px
     font-weight: bold
     margin-bottom: 8px
 
 .password__message
-    font-size: 12px
+    font-size: 10px
     margin-bottom: 5px
 
 .form__group
     position: relative
-    min-height: 40px
-    margin-bottom: 20px
+    margin-bottom: 18px
 
 .form__error-label
     position: absolute
-    bottom: -10px
+    bottom: -12px
     left: 15px
-    font-size: 10px
+    font-size: 8px
     color: red
+
+.form__switcher
+    display: flex
+    margin-bottom: 20px
 
 .forms__name-group
     display: flex
-    
+    flex-direction: row
+
+#firstname
+    margin-right: 10px
 
 .transport__container
     display: flex
@@ -496,3 +502,38 @@ main
 
 .edit__button
     display: none
+
+.reg__tab
+    font-size: 15px
+    padding: 10px 15px
+
+.hero__centered
+    align-items: center
+
+.menu__link
+    
+.menu__list
+    li
+        position: relative
+        transition: display 2ms easy
+        &:hover .sub__menu-list
+            display: block
+
+.hero
+    padding: 5px
+
+.sub__menu-list
+    transition: display 2ms easy
+    min-width: 180px
+    background: $back-color
+    padding: 20px 0px 0px 0px
+    display: none
+    position: absolute
+    left: -10px
+    top: 17px
+
+.sub__menu-link
+    display: inline-block
+    padding: 15px 10px
+    &:hover
+        color: $main-color
