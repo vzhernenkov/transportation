@@ -175,7 +175,7 @@ app.post("/user", (req, res) => {
   res.status(200).json({id});
 });
 
-app.post("/post", (req, res) => {
+app.post("/orders", (req, res) => {
   let order = req.body;
   let id = orders.push(order) - 1;
   res.status(200).json({id});
@@ -203,7 +203,8 @@ app.patch("/carrier", (req, res) => {
   let index = carriers.find(el => el.registerNumber == carrierId);
   carriers[index] = {
     ...carriers[index], ...carrier
-  }
+  };
+  res.send();
 })
 
 app.listen(port, () => {

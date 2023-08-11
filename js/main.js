@@ -39,10 +39,10 @@ if (document.title == "Register"){
     }
   })
 
-  password.addEventListener('input', function(e) {
-    let password = e.target.value;
-    validatePassword(password);
-  });
+  // password.addEventListener('input', function(e) {
+  //   let password = e.target.value;
+  //   validatePassword(password);
+  // });
 
 };
 
@@ -526,8 +526,6 @@ async function deleteTruck (truck) {
 async function addTruckToCompanyTruckList (truck) {
   let company = await getCurrentCompany().then(data => data);
   company.trucks.push(truck);
-
-  console.log(company);
 
   fetch("http://localhost:3333/carrier", {
     method: 'PATCH',
