@@ -47,114 +47,6 @@ let orders = [
           }
       }
   },
-  {
-      "id": "ARG1",
-      "from": "Santa Rosa",
-      "to": "Lanús",
-      "truckType": "REF",
-      "cargo": "products+5",
-      "loadingDate": "10.09.2023",
-      "arrivalDate": "13.09.2023",
-      "status": "vacant",
-      "shipper": {
-          "company": null,
-          "user": null,
-          "truckType": null,
-          "driver": null,
-          "truck": null,
-          "trail": null,
-          "financeShipper": {
-              "price": "4965",
-              "paymentDate": null,
-              "paymentType": null,
-              "documentStatus": null,
-              "paymentStatus": null
-          }
-      },
-      "carrier": {
-          "company": null,
-          "user": null,
-          "financeCarrier": {
-              "price": "4965",
-              "paymentDate": null,
-              "paymentType": null,
-              "documentStatus": null,
-              "paymentStatus": null
-          }
-      }
-  },
-  {
-      "id": "ARG2",
-      "from": "Gualeguaychú",
-      "to": "Gualeguaychú",
-      "truckType": "REF",
-      "cargo": "products+5",
-      "loadingDate": "16.09.2023",
-      "arrivalDate": "19.09.2023",
-      "status": "vacant",
-      "shipper": {
-          "company": null,
-          "user": null,
-          "truckType": null,
-          "driver": null,
-          "truck": null,
-          "trail": null,
-          "financeShipper": {
-              "price": "1813",
-              "paymentDate": null,
-              "paymentType": null,
-              "documentStatus": null,
-              "paymentStatus": null
-          }
-      },
-      "carrier": {
-          "company": null,
-          "user": null,
-          "financeCarrier": {
-              "price": "1813",
-              "paymentDate": null,
-              "paymentType": null,
-              "documentStatus": null,
-              "paymentStatus": null
-          }
-      }
-  },
-  {
-      "id": "ARG3",
-      "from": "Río Negro",
-      "to": "Buenos Aires",
-      "truckType": "REF",
-      "cargo": "products+5",
-      "loadingDate": "24.08.2023",
-      "arrivalDate": "27.08.2023",
-      "status": "vacant",
-      "shipper": {
-          "company": null,
-          "user": null,
-          "truckType": null,
-          "driver": null,
-          "truck": null,
-          "trail": null,
-          "financeShipper": {
-              "price": "67",
-              "paymentDate": null,
-              "paymentType": null,
-              "documentStatus": null,
-              "paymentStatus": null
-          }
-      },
-      "carrier": {
-          "company": null,
-          "user": null,
-          "financeCarrier": {
-              "price": "67",
-              "paymentDate": null,
-              "paymentType": null,
-              "documentStatus": null,
-              "paymentStatus": null
-          }
-      }
-  }
 ];
 
 app.post("/shipper", (req, res) => {
@@ -200,7 +92,7 @@ app.get("/orders", (req, res) => {
 app.patch("/carrier", (req, res) => {
   let payload = req.body;
   let {key} = req.query;
-  console.log({payload})
+
   let carrierId = payload.registerNumber;
   let index = carriers.findIndex(el => el.registerNumber == carrierId);
   if(key){
@@ -210,21 +102,22 @@ app.patch("/carrier", (req, res) => {
       ...(carriers[index] || {}), ...payload
     }; 
   }
-  console.log({carriers})
+
   res.status(200).json('ok');
 })
+
 app.put("/carrier/:registerNumber/:key/", (req, res) => {
   let payload = req.body;
   let {key, registerNumber} = req.params;
-  console.log({payload})
+
   let index = carriers.findIndex(el => el.registerNumber === registerNumber);
   let indexOfValues = carriers[index][key].findIndex(el => el.id === payload.id);
   if(indexOfValues > -1){
     carriers[index][key][indexOfValues] = payload
   }else{
-    carriers[index][key].push(payload)
+    carriers[index][key].push(payload);
   }
-  console.log({carriers})
+  
   res.status(200).json('ok');
 })
 

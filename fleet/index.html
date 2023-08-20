@@ -57,37 +57,112 @@
         <div class="transport__container container container_less-padding">
           <div class="transport__block add__block">
             <div class="transport__add-panel">
-              <h2 class="transport__list-header more__transport-margin">Add your truck</h2>
-              <form action="#" method="post" id="transport__form" class="transport__form">
-                
+              <h2 class="transport__list-header more__transport-margin add__header">Add your driver</h2>
+              <form action="#" method="post" id="drivers" class="transport__form transport__form_active">
+
                 <div class="form__group">
-                  <label class="form__error-label label-for-name" for="name"></label>
+                  <label class="form__error-label label-for-name" for="driverName"></label>
+                  <input required class="form__input" type="text" placeholder="First name" id="driverName">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__error-label label-for-name" for="driverSurname"></label>
+                  <input required class="form__input" type="text" placeholder="Last name" id="driverSurname">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__error-label label-for-name" for="driverNumber"></label>
+                  <input required class="form__input" type="text" placeholder="Phone number" id="driverNumber">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__error-label label-for-name" for="driverLicense"></label>
+                  <input required class="form__input" type="text" placeholder="Driver License ID" id="driverLicense">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__error-label label-for-name" for="driverID"></label>
+                  <input required class="form__input" type="text" placeholder="National ID" id="driverID">
+                </div>
+
+                <button id="add__driver" type="" class="transport__add form__button add__button">Add driver</button>
+                <button id="edit__driver" type="" class="transport__add form__button edit__button">Save</button>
+                <button id="cancel__driver" type="" class="transport__add form__button cancel__button">Cancel</button>
+              </form>
+              <form action="#" method="post" id="trucks" class="transport__form">
+
+                <div class="form__group">
+                  <label class="form__error-label label-for-name" for="truck__name"></label>
                   <input required class="form__input" type="text" placeholder="Truck name" id="truck__name">
                 </div>
 
                 <div class="form__group">
-                  <label class="form__error-label label-for-name" for="name"></label>
-                  <input required class="form__input" type="text" placeholder="Driver name" id="truck__driver">
-                </div>
-
-                <div class="form__group">
-                  <label class="form__error-label label-for-name" for="name"></label>
+                  <label class="form__error-label label-for-name" for="truck__number"></label>
                   <input required class="form__input" type="text" placeholder="Truck number" id="truck__number">
                 </div>
 
                 <div class="form__group">
-                  <label class="form__error-label label-for-name" for="name"></label>
-                  <input required class="form__input" type="text" placeholder="Current truck location" id="truck__location">
+                  <select class="form__input" name="truck" id="truck__capacity">
+                    <option value="">Choose load capacity</option>
+                    <option value="22">22</option>
+                    <option value="20">20</option>
+                    <option value="15">15</option>
+                    <option value="10">10</option>
+                    <option value="5">5</option>
+                    <option value="2">2</option>
+                  </select>
                 </div>
 
                 <div class="transport__type-block">
-                  <label for="trailer">Type of truck:</label>
-                  <input required class="form__radio" type="radio" name="trailer" id="REF">REF
-                  <input required class="form__radio" type="radio" name="trailer" id="TILT">TILT
+                  <select class="form__input" name="truck" id="truck__type">
+                    <option value="">Choose truck type</option>
+                    <option value="REF">REF</option>
+                    <option value="TILT">TILT</option>
+                  </select>
                 </div>
-                <button id="add__truck" type="" class="transport__add form__button add__button">Add driver</button>
+                <button id="add__truck" type="" class="transport__add form__button add__button">Add truck</button>
                 <button id="edit__truck" type="" class="transport__add form__button edit__button">Save</button>
                 <button id="cancel__truck" type="" class="transport__add form__button cancel__button">Cancel</button>
+              </form>
+              <form action="#" method="post" id="trailers" class="transport__form">
+
+                <div class="form__group">
+                  <label class="form__error-label label-for-name" for="trailer__name"></label>
+                  <input required class="form__input" type="text" placeholder="Trailer name" id="trailer__name">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__error-label label-for-name" for="trailer__number"></label>
+                  <input required class="form__input" type="text" placeholder="Trailer number" id="trailer__number">
+                </div>
+
+                <div class="form__group">
+                  <select class="form__input" name="truck" id="trailer__capacity">
+                    <option value="">Choose load capacity</option>
+                    <option value="22">22</option>
+                    <option value="20">20</option>
+                    <option value="15">15</option>
+                    <option value="10">10</option>
+                    <option value="5">5</option>
+                    <option value="2">2</option>
+                  </select>
+                </div>
+
+                <div class="form__group">
+                  <label class="form__error-label label-for-name" for="trailer__volume"></label>
+                  <input required class="form__input" type="text" placeholder="Volume in m3" id="trailer__volume">
+                </div>
+
+                <div class="transport__type-block">
+                  <select class="form__input" name="trailer" id="trailer__type">
+                    <option value="">Choose trailer type</option>
+                    <option value="REF">REF</option>
+                    <option value="TILT">TILT</option>
+                  </select>
+                </div>
+                <button id="add__trail" type="" class="transport__add form__button add__button">Add trailer</button>
+                <button id="edit__trail" type="" class="transport__add form__button edit__button">Save</button>
+                <button id="cancel__trail" type="" class="transport__add form__button cancel__button">Cancel</button>
               </form>
             </div>
           </div>
@@ -95,18 +170,27 @@
             <div class="trasport__search-bar">
               <h2 class="transport__list-header">Your fleet</h2>
               <div class="transport__search_bar">
-                <select class="search__select" name="truck__filter" id="truck__filter">
+                <select class="search__select" name="truck__filter" id="fleet__filter">
                   <option value="">Choose a search option</option>
-                  <option value="name">Name</option>
-                  <option value="driver">Driver</option>
-                  <option value="number">Number</option>
-                  <option value="location">Location</option>
                 </select>
                 <input class="search__input" type="search" placeholder="">
                 <button class="search__button">Search</button>
               </div>
             </div>
-            <ul class="transport__list">
+            <nav class="fleet__nav">
+              <ul class="fleet__nav-list">
+                <li class="fleet__nav-item">
+                  <h4 class="fleet__navbutton navbutton-active">Drivers</h4>
+                </li>
+                <li class="fleet__nav-item">
+                  <h4 class="fleet__navbutton">Trucks</h4>
+                </li>
+                <li class="fleet__nav-item">
+                  <h4 class="fleet__navbutton">Trailers</h4>
+                </li>
+              </ul>
+            </nav>
+            <ul class="fleet__list">
             </ul>
           </div>
         </div>

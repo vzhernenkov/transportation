@@ -10,7 +10,6 @@ let overlay = document.querySelector('.overlay');
 
 overlay.addEventListener('click', function (e) {
   let target = e.target;
-  //console.log(target);
   if (target.textContent == 'Log out') {
     e.preventDefault();
     if (confirm('Are you sure, that you want to log out?')) {
@@ -70,7 +69,6 @@ if (document.title == "Orders") {
   renderOrdersList();
 
   const TAB_BUTTONS = document.querySelector(".orders__nav-list");
-  const LOGOUT = document.querySelector(".orders__nav-list");
   
   TAB_BUTTONS.addEventListener('click', function (e) {
     let target = e.target;
@@ -78,7 +76,7 @@ if (document.title == "Orders") {
       removeClassFromTabButtons ('orders__navbutton', 'navbutton-active');
       tabActiveButton(target);
       hideAllTabs ('orders', 'active__orders-list');
-      showOrderList (target.textContent);      
+      showBlock (target.textContent, 'active__orders-list');      
     }
   })
 
@@ -86,58 +84,114 @@ if (document.title == "Orders") {
 
 if (document.title == "Fleet") {
   showActiveUser();
-
-  createTruckList();
-
-  let FORM = document.getElementById('transport__form');
-  let truckList = document.querySelector('.transport__list');
-  let searchButton = document.querySelector('.search__button'),
-      editButton = document.querySelector('.edit__button'),
-      cancelButton = document.querySelector('.cancel__button'),
-      addButton = document.querySelector('.add__button');
-
+  createFleetList();
   
-editButton.addEventListener('click', function (e) {
- edit();
- FORM.reset();
-});
+  const TAB_BUTTONS = document.querySelector(".fleet__nav-list");
+  let fleetList = document.querySelector('.fleet__list');
+  let searchButton = document.querySelector('.search__button'),
+  formsBlock = document.querySelector('.transport__add-panel'),
+  currentItem = document.querySelector('.navbutton-active').textContent.toLowerCase();
+  
+  createSearchOptions(currentItem);
+  
+  TAB_BUTTONS.addEventListener('click', async function (e) {
+    let target = e.target;
+    let item = target.textContent.slice(0, -1).toLowerCase();
+    let header = document.querySelector('.add__header');
 
-cancelButton.addEventListener('click', function (e) {
-  removeEditForm();
-  removeEditTruck();
+    
+    if (target.classList.contains('fleet__navbutton') && target) {
+      header.textContent = `Add your ${item}`;
+      createSearchOptions(target.textContent.toLowerCase());
+      removeClassFromTabButtons ('fleet__navbutton', 'navbutton-active');
+      tabActiveButton(target);
+      hideAllTabs ('transport__form', 'transport__form_active');
+      showBlock (target.textContent, 'transport__form_active');
+      createFleetList();
+    }
+  })
+
+formsBlock.addEventListener('click', async function (e) {
+  e.preventDefault();
+  let target = e.target;
+  let item = document.querySelector('.navbutton-active').textContent.toLowerCase();
+
+  if (target.classList.contains('add__button')) {
+    let newItem;
+    let form = document.querySelector(`#${item}`);
+    let id = await createIdForItem(item).then(id => id);
+
+     if (item == 'drivers') {
+      newItem = createDriver(id);
+    } else if (item == 'trucks') {
+      newItem = createTruck(id);
+    } else if (item == 'trailers') {
+      newItem = createTrailer(id);
+    }
+    
+    let respond = await addItemToCompany(newItem);
+
+    if(respond.status == 200) {
+     createFleetList();
+    } else {
+      alert('Something went wrong. Try again later')
+    }
+      form.reset();
+  };
+
+  if (target.classList.contains('edit__button')) {
+    let currentItemID = localStorage.getItem("edit_id").slice(1);
+    
+    let edit = await editItemInformation(currentItemID, item);
+
+      removeEditForm(item);
+      createFleetList();
+  
+      let form = document.getElementById(`${item}`);
+      form.reset();
+      localStorage.removeItem("edit_id");
+  };
+
+  if (target.classList.contains('cancel__button')) {
+    let item = document.querySelector('.navbutton-active').textContent.toLowerCase();
+    removeEditForm(item);
+    removeEditItem();
+    localStorage.removeItem("edit_id");
+  };
 })
   
 
-  searchButton.addEventListener('click', function(e) {
-    let filteredList = filterTrucks();
-    createFilteredList(filteredList);
-  })
-
-  truckList.addEventListener('click', function (e) {
+  searchButton.addEventListener('click', async function(e) {
     let target = e.target;
 
+    if (target.textContent == "Search") {
+      let currentItem = document.querySelector('.navbutton-active').textContent.toLowerCase();
+      let filteredList = await filterItems(currentItem).then(data => data);
+      createFilteredList(filteredList, currentItem);
+    } else if (target.textContent == "Cancel") {
+      createFleetList();
+    }
+  })
+
+  fleetList.addEventListener('click', async function (e) {
+    let target = e.target;
+    let type = document.querySelector('.navbutton-active').textContent.toLowerCase();
+
+    
     if (target.classList.contains('transport__delete') && target) {
-      deleteTruck(target);
+      let editedID = await getItemFromCard(target, type, "id").then(data => data);
+      deleteTruck(type, editedID);
     }
 
     if (target.classList.contains('transport__edit') && target) {
-      let currentTruck = getTruckInfoFromCard(target);
-      showEditTruck(target)
-      showEditForm(currentTruck)
+      let currentItem = await getItemFromCard(target, type).then(data => data);
+      let editedID = await getItemFromCard(target, type, "id").then(data => data);
+      localStorage.setItem("edit_id", editedID);
+
+      showEditItem(target);
+      showEditForm(currentItem, type);
     }
   })
-
-  addButton.addEventListener('click', async function (e) {
-    e.preventDefault();
-     let newTruck = createTruck();
-     let respond = await addTruckToCompanyTruckList(newTruck);
-     if(respond.status == 200) {
-      createTruckList();
-     } else {
-       alert('Something went wrong. Try again later')
-     }
-      //FORM.reset();
-  });
 
 }
 
@@ -148,7 +202,7 @@ cancelButton.addEventListener('click', function (e) {
 class Carrier {
   constructor (company, registerNumber, user, id) {
     this.company = company,
-    this.id = `CRR${id}`,
+    this.id = `CR${id}`,
     this.registerNumber = registerNumber,
     this.users = [user.id],
     this.trucks = [],
@@ -166,7 +220,7 @@ class Carrier {
 class Shipper {
   constructor (company, registerNumber, user, id) {
     this.company = company,
-    this.id = `SPR${id}`,
+    this.id = `SP${id}`,
     this.registerNumber = registerNumber,
     this.users = [user.id],
     this.orders = {
@@ -189,8 +243,8 @@ class Order {
     this.arrivalDate = arrivalDate,
     this.status = 'vacant',
     this.carrier = {
-      company: null,
-      user: null,
+      id: null,
+      userId: null,
       truckType: null,
       driver: null,
       truck: null,
@@ -204,8 +258,8 @@ class Order {
       }
     },
     this.shipper = {
-      company: null,
-      user: null,
+      id: null,
+      userId: null,
       financeCarrier: {
         "price": price,
         paymentDate: null,
@@ -235,34 +289,36 @@ class User {
 }
 
 class Truck {
-  constructor (name, driver, number, location, type) {
+  constructor (name, number, capacity, type, id) {
+    this.id = `T${id}`
     this.name = name,
-    this.driver = driver,
     this.number = number,
-    this.location = location,
+    this.capacity = capacity,
     this.type = type,
     this.scoring = 'Unverified'
   }
 };
 
-class Trail {
-  constructor (name, driver, number, location, type) {
+class Trailer {
+  constructor (name, capacity, number, volume, type, id) {
+    this.id = `TL${id}`
     this.name = name,
-    this.driver = driver,
     this.number = number,
-    this.location = location,
+    this.capacity = capacity,
     this.type = type,
+    this.volume = volume,
     this.scoring = 'Unverified'
   }
 };
 
 class Driver {
-  constructor (name, driver, number, location, type) {
-    this.name = name,
-    this.driver = driver,
-    this.number = number,
-    this.location = location,
-    this.type = type,
+  constructor (fname, lname, phone, dlicense, nationalID, id) {
+    this.id = `D${id}`
+    this.firstName = fname,
+    this.lastName = lname,
+    this.phone = phone,
+    this.driverLicense = dlicense,
+    this.nationalID = nationalID,
     this.scoring = 'Unverified'
   }
 };
@@ -302,102 +358,272 @@ class Driver {
 
 //Fleet
 
-function createTruck () {
+function createTruck (id) {
 
   let name = document.querySelector('#truck__name').value,
-      driver = document.querySelector('#truck__driver').value,
       number = document.querySelector('#truck__number').value,
-      location = document.querySelector('#truck__location').value,
-      type = [...document.querySelectorAll('.form__radio')].filter(el => el.checked)[0].id;
+      capacity = document.querySelector('#truck__capacity').value,
+      type = document.querySelector('#truck__type').value;
   
-  let truck = new Truck (name, driver, number, location, type);
+  let truck = new Truck (name, number, capacity, type, id);
   
   return truck;
 };
 
-async function createTruckList () {
+function  createDriver (id) {
+  let firstName = document.querySelector('#driverName').value,
+      lastName = document.querySelector('#driverSurname').value,
+      phone = document.querySelector('#driverNumber').value,
+      license = document.querySelector('#driverLicense').value,
+      nationalID = document.querySelector('#driverID').value;
+  
+  let driver = new Driver (firstName, lastName, phone, license, nationalID, id);
+  
+  return driver;
+};
+
+function  createTrailer (id) {
+  let name = document.querySelector('#trailer__name').value,
+      number = document.querySelector('#trailer__number').value,
+      capacity = document.querySelector('#trailer__capacity').value,
+      volume = document.querySelector('#trailer__volume').value,
+      type = document.querySelector('#trailer__type').value;
+  
+  let trailer = new Trailer (name, capacity,number, volume, type, id);
+  
+  return trailer;
+};
+
+function createFleetCard (obj, item) {
+  let res;
+  
+
+  if (item == 'drivers') {
+    res = `<li class="transport__item">
+            <div class="transport__card">
+            <div class="transport__information">
+              <div class="information__item">
+                <div class="transport__info transport__name">Driver: <span class="info driver__name">${obj.firstName}</span> <span id="driver__surname" class="info driver__surname">${obj.lastName}</span></div>
+                <div class="transport__info transport__driver">National ID: <span class="info driver__nationalID">${obj.nationalID}</span></div>
+              </div>
+              <div class="information__item">
+                <div class="transport__info transport__number">Phone: <span class="info driver__phone">${obj.phone}</span></div>
+                <div class="transport__info transport__type">Driver license: <span class="info driver__license">${obj.driverLicense}</span></div>
+              </div>
+              <div class="information__item">
+                <div class="transport__info transport__location">Scoring status: <span class="info driver__scoring">${obj.scoring}</span></div>
+              </div>
+              <div class="information__item">
+                <button class="transport__info transport__button transport__delete">Delete</button>
+                <button class="transport__info transport__button transport__edit">Edit</button>
+              </div>
+              </div>
+            </div>
+          </li>`
+  } else if (item == 'trucks') {
+    res = `<li class="transport__item">
+            <div class="transport__card">
+            <div class="transport__information">
+              <div class="information__item">
+                <div class="transport__info transport__name">Truck name: <span class="info truck__name">${obj.name}</span></div>
+              </div>
+              <div class="information__item">
+                <div class="transport__info transport__number">Number: <span class="info truck__number">${obj.number}</span></div>
+                <div class="transport__info transport__type">Type: <span class="info truck__type">${obj.type}</span></div>
+              </div>
+              <div class="information__item">
+                <div class="transport__info transport__capacity">Capacity: <span class="info truck__capacity">${obj.capacity} tonnes</span></div>
+                <div class="transport__info transport__location">Scoring status: <span class="info truck__scoring">${obj.scoring}</span></div>
+              </div>
+              <div class="information__item">
+                <button class="transport__info transport__button transport__delete">Delete</button>
+                <button class="transport__info transport__button transport__edit">Edit</button>
+              </div>
+              </div>
+            </div>
+          </li>`
+  } else if (item == 'trailers') {
+          res = `<li class="transport__item">
+          <div class="transport__card">
+          <div class="transport__information">
+            <div class="information__item">
+              <div class="transport__info transport__name">Trailer name: <span class="info trailer__name">${obj.name}</span></div>
+              <div class="transport__info transport__number">Number: <span class="info trailer__number">${obj.number}</span></div>
+            </div>
+            <div class="information__item">
+              <div class="transport__info transport__capacity">Capacity: <span class="info trailer__capacity">${obj.capacity} tonnes</span></div>
+              <div class="transport__info transport__type">Type: <span class="info trailer__type">${obj.type}</span></div>
+            </div>
+            <div class="information__item">
+              <div class="transport__info transport__volume">Volume: <span class="info trailer__volume">${obj.volume} m3</span></div>
+              <div class="transport__info transport__scoring">Scoring status: <span class="info trailer__scoring">${obj.scoring}</span></div>
+            </div>
+            <div class="information__item">
+              <button class="transport__info transport__button transport__delete">Delete</button>
+              <button class="transport__info transport__button transport__edit">Edit</button>
+            </div>
+            </div>
+          </div>
+        </li>`
+  };
+  return res;
+}
+
+async function createFleetList () {
   let company = await getCurrentCompany().then(data => data);
-  let trucks = company.trucks;
-  let list = document.querySelector('.transport__list');
+
+  let item = document.querySelector('.navbutton-active').textContent.toLowerCase();
+  let target = company[item];
+  
+  let list = document.querySelector('.fleet__list');
+  
   let cards = ''
   list.innerHTML = "";
 
-  trucks.forEach(el => {
-    cards += `<li class="transport__item">
-                <div class="transport__card">
-                <div class="transport__information">
-                  <div class="information__item">
-                    <div class="transport__info transport__name">Truck name: <span class="info truck__name">${el.name}</span></div>
-                    <div class="transport__info transport__driver">Driver: <span class="info truck__driver">${el.driver}</span></div>
-                  </div>
-                  <div class="information__item">
-                    <div class="transport__info transport__number">Number: <span class="info truck__number">${el.number}</span></div>
-                    <div class="transport__info transport__type">Type: <span class="info">${el.type}</span></div>
-                  </div>
-                  <div class="information__item">
-                    <div class="transport__info transport__location">Current location: <span class="info truck__location">${el.location}</span></div>
-                    <div class="transport__info transport__location">Scoring status: <span class="info">${el.scoring}</span></div>
-                  </div>
-                  <div class="information__item">
-                    <button class="transport__info transport__button transport__delete">Delete</button>
-                    <button class="transport__info transport__button transport__edit">Edit</button>
-                  </div>
-                </div>
-              </div>
-            </li>`
+  target.forEach(el => {
+    cards += createFleetCard(el, item);
   });
 
   list.innerHTML = cards;
 }; 
 
+function createSearchOptions (item) {
+  let select = document.querySelector('.search__select');
 
-function showEditTruck (truck) {
-  let currentTruckCard = truck.closest('.transport__item');
+  switch (item) {
+    case 'drivers':
+      select.innerHTML = `<option value="">Choose a search option</option>
+      <option value="firstName">Name</option>
+      <option value="lastName">Surname</option>
+      <option value="phone">Phone</option>
+      <option value="nationalID">National ID</option>
+      <option value="driverLicense">Driver license</option>
+      <option value="scoring">Scoring status</option>`;
+      break;
+    case 'trucks':
+      select.innerHTML = `<option value="">Choose a search option</option>
+      <option value="name">Name</option>
+      <option value="number">Number</option>
+      <option value="capacity">Capacity</option>
+      <option value="type">Type</option>
+      <option value="scoring">Scoring status</option>`;
+      break;
+    case 'trailers':
+      select.innerHTML = `<option value="">Choose a search option</option>
+      <option value="name">Name</option>
+      <option value="number">Number</option>
+      <option value="capacity">Capacity</option>
+      <option value="volume">Volume</option>
+      <option value="type">Type</option>
+      <option value="scoring">Scoring status</option>`;
+      break;
+  }
+  
+}
 
-  removeEditTruck();
+function showEditItem (target) {
+  let currentTruckCard = target.closest('.transport__item');
+
+  removeEditItem();
   currentTruckCard.style.border = "2px solid red";
   currentTruckCard.classList.add('check');
 };
 
-function getTruckInfoFromCard (truck) {
-  let currentTruckCard = truck.closest('.transport__item'),
-      truckName = currentTruckCard.querySelector('.truck__name').textContent,
-      driver = currentTruckCard.querySelector('.truck__driver').textContent,
-      truckNumber = currentTruckCard.querySelector('.truck__number').textContent,
-      location = currentTruckCard.querySelector('.truck__location').textContent;
 
-  return {
-    truckName: truckName,
-    driver: driver,
-    truckNumber: truckNumber,
-    location: location
+
+async function getItemFromCard (target, type, item) {
+  let currentItemCard = target.closest('.transport__item');
+  let company = await getCurrentCompany().then(data => data);
+  let currentItem = {};
+  let res;
+
+  if (type == 'drivers') {
+    currentItem.firstName = currentItemCard.querySelector('.driver__name').textContent;
+    currentItem.lastName = currentItemCard.querySelector('.driver__surname').textContent;
+    currentItem.nationalID = currentItemCard.querySelector('.driver__nationalID').textContent;
+    currentItem.driverLicense = currentItemCard.querySelector('.driver__license').textContent;
+
+      res = company[type].filter(el => {
+        return (el.firstName == currentItem.firstName && el.lastName == currentItem.lastName && el.nationalID == currentItem.nationalID && el.driverLicense == currentItem.driverLicense);
+      })[0];
+ 
+  } else if (type == 'trucks') {
+    currentItem.name = currentItemCard.querySelector('.truck__name').textContent;
+    currentItem.number = currentItemCard.querySelector('.truck__number').textContent;
+
+    res = company[type].filter(el => {
+      return (el.name == currentItem.name && el.number == currentItem.number);
+    })[0];
+
+  } else if (type == 'trailers') {
+    currentItem.name = currentItemCard.querySelector('.trailer__name').textContent;
+    currentItem.number = currentItemCard.querySelector('.trailer__number').textContent;
+    currentItem.capacity = currentItemCard.querySelector('.trailer__capacity').textContent;
+    currentItem.volume = currentItemCard.querySelector('.trailer__volume').textContent;
+
+    res = company[type].filter(el => {
+      return (el.name == currentItem.name && el.number == currentItem.number);
+    })[0];
   }
+
+  if (item) return res[item];
+
+  return res;
+};
+
+async function getItemFromform (type) {
+
 }
 
-function showEditForm (obj) {
+function showEditForm (obj, type) {
+  let forms = document.querySelectorAll('.transport__form');
+
+  forms.forEach(el => el.reset());
+
   let header = document.querySelector('.transport__list-header'),
-      editButton = document.querySelector('.edit__button'),
-      cancelButton = document.querySelector('.cancel__button'),
-      addButton = document.querySelector('.add__button'),
-      inputs = document.querySelectorAll('.form__input'),
-      radio = document.querySelectorAll('.form__radio'),
-      name = document.querySelector('#truck__name'),
-      driver = document.querySelector('#truck__driver'),
-      number = document.querySelector('#truck__number'),
-      location = document.querySelector('#truck__location');
+      form = document.getElementById(`${type}`),
+      editButton = form.querySelector('.edit__button'),
+      cancelButton = form.querySelector('.cancel__button'),
+      addButton = form.querySelector('.add__button');
 
-  name.value = obj.truckName;
-  driver.value = obj.driver;
-  number.value = obj.truckNumber;
-  location.value = obj.location;
 
-  inputs.forEach(el => {
-    el.required = false;
-  });
+  if (type == 'drivers') {
+    let name = document.getElementById('driverName');
+    let surname = document.getElementById('driverSurname'); 
+    let phone = document.getElementById('driverNumber');
+    let license = document.getElementById('driverLicense');
+    let nationalID = document.getElementById('driverID');
 
-  radio.forEach(el => {
-    el.required = false;
-  });
+    name.value = obj.firstName;
+    surname.value = obj.lastName;
+    phone.value = obj.phone;
+    license.value = obj.driverLicense;
+    nationalID.value = obj.nationalID;
+
+  } else if (type == 'trucks') {
+    let name = document.getElementById('truck__name');
+    let number = document.getElementById('truck__number');
+    let capacity = document.getElementById('truck__capacity');
+    let type = document.getElementById('truck__type');
+    
+    name.value = obj.name;
+    number.value = obj.number;
+    capacity.value = obj.capacity;
+    type.value = obj.type;
+
+  } else if (type == 'trailers') {
+    let name = document.getElementById('trailer__name');
+    let number = document.getElementById('trailer__number');
+    let capacity = document.getElementById('trailer__capacity');
+    let type = document.getElementById('trailer__type');
+    let volume = document.getElementById('trailer__volume');
+
+    name.value = obj.name;
+    number.value = obj.number;
+    capacity.value = obj.capacity;
+    type.value = obj.type;
+    volume.value = obj.volume;
+  }
 
   editButton.style.display = 'inline-block';
   cancelButton.style.display = 'inline-block';
@@ -406,7 +632,7 @@ function showEditForm (obj) {
   header.textContent = "Enter new info";
 };
 
-function removeEditTruck () {
+function removeEditItem () {
   let allCards = document.querySelectorAll('.transport__item');
 
   allCards.forEach(el => {
@@ -415,24 +641,12 @@ function removeEditTruck () {
   })
 };
 
-function removeEditForm () {
+function removeEditForm (type) {
   let header = document.querySelector('.transport__list-header'),
-  editButton = document.querySelector('.edit__button'),
-  cancelButton = document.querySelector('.cancel__button'),
-  addButton = document.querySelector('.add__button');
-  inputs = document.querySelectorAll('.form__input');
-  radio = document.querySelectorAll('.form__radio');
-
-inputs.forEach(el => {
-el.required = true;
-el.value = '';
-});
-
-
-radio.forEach(el => {
-el.required = true;
-el.checked = false;
-});
+      form = document.getElementById(`${type}`),
+      editButton = form.querySelector('.edit__button'),
+      cancelButton = form.querySelector('.cancel__button'),
+      addButton = form.querySelector('.add__button');
 
 
 editButton.style.display = 'none';
@@ -440,118 +654,94 @@ cancelButton.style.display = 'none';
 addButton.style.display = 'block';
 
 header.textContent = "Add your truck";
+form.reset();
 };
 
-function edit () {
-  let name = document.querySelector('#truck__name').value,
-      driver = document.querySelector('#truck__driver').value,
-      number = document.querySelector('#truck__number').value,
-      location = document.querySelector('#truck__location').value,
-      type = [...document.querySelectorAll('.form__radio')].filter(el => el.checked)[0],
-      editTruck = document.querySelector('.check');
+async function editItemInformation (id, type) {
 
-  editTruckInformation(editTruck, name, driver, number, location, type);
-  removeEditForm();
-  createTruckList();
-};
+// let company = await getCurrentCompany().then(data => data);
+let item;
 
-async function editTruckInformation (truck, newname, newdriver, newnumber, newlocation, newtype) {
-  let currentTruckName = truck.querySelector('.truck__name').textContent,
-      company = await getCurrentCompany().then(data => data);
-  company.trucks.map(el => {
-    if (el.name == currentTruckName) {
-      if(newname) el.name = newname;
-      if(newdriver) el.driver = newdriver;
-      if(newnumber) el.number = newnumber;
-      if(newlocation) el.location = newlocation;
-      if(newtype) el.type = newtype;
-    }
-  })
+if (type == 'drivers') {
+let name = document.getElementById('driverName').value;
+let surname = document.getElementById('driverSurname').value;
+let phone = document.getElementById('driverNumber').value;
+let license = document.getElementById('driverLicense').value;
+let nationalID = document.getElementById('driverID').value;
 
-  editCompany(company);
+item = new Driver (name, surname, phone, license, nationalID, id);
+
+} else if (type == 'trucks') {
+let name = document.getElementById('truck__name').value;
+let number = document.getElementById('truck__number').value;
+let capacity = document.getElementById('truck__capacity').value;
+let type = document.getElementById('truck__type').value;
+
+item = new Truck (name, number, capacity, type, id);
+
+} else if (type == 'trailers') {
+let name = document.getElementById('trailer__name').value;
+let number = document.getElementById('trailer__number').value;
+let capacity = document.getElementById('trailer__capacity').value;
+let type = document.getElementById('trailer__type').value;
+let volume = document.getElementById('trailer__volume').value;
+
+item = new Trailer (name, capacity, number, volume, type, id);
 }
 
-async function filterTrucks () {
-  let trucks = await getCurrentCompany().then(data => data.trucks);
-  let searchOption = document.querySelector('#truck__filter').value;
+let res = await addItemToCompany(item);
+
+return res;
+}
+
+async function filterItems (item) {
+  let items = await getCurrentCompany().then(data => data[item]);
+  let searchOption = document.querySelector('#fleet__filter').value;
   let searchInfo = document.querySelector('.search__input').value;
   
-  return trucks.filter(el => {
+  
+  return items.filter(el => {
       return el[searchOption].includes(searchInfo);
   }) 
 };
 
-function createFilteredList (trucks) {
-  let list = document.querySelector('.transport__list');
+function createFilteredList (arr, item) {
+  let list = document.querySelector('.fleet__list');
+
   let cards = ''
   list.innerHTML = "";
 
-  trucks.forEach(el => {
-    cards += `<li class="transport__item">
-                <div class="transport__card">
-                <div class="transport__information">
-                  <div class="information__item">
-                    <div class="transport__info transport__name">Truck name: <span class="info truck__name">${el.name}</span></div>
-                    <div class="transport__info transport__driver">Driver: <span class="info truck__driver">${el.driver}</span></div>
-                  </div>
-                  <div class="information__item">
-                    <div class="transport__info transport__number">Number: <span class="info truck__number">${el.number}</span></div>
-                    <div class="transport__info transport__type">Type: <span class="info">${el.type}</span></div>
-                  </div>
-                  <div class="information__item">
-                    <div class="transport__info transport__location">Current location: <span class="info truck__location">${el.location}</span></div>
-                    <div class="transport__info transport__location">Scoring status: <span class="info">${el.scoring}</span></div>
-                  </div>
-                  <div class="information__item">
-                    <button class="transport__info transport__button transport__delete">Delete</button>
-                    <button class="transport__info transport__button transport__edit">Edit</button>
-                  </div>
-                </div>
-              </div>
-            </li>`
+  arr.forEach(el => {
+    cards += createFleetCard(el, item);
   });
 
   list.innerHTML = cards;
 }
 
-async function deleteTruck (truck) {
+async function deleteTruck (way, id) {
   if (confirm('Are you sure, that you want to delete your truck?')) {
-    let company = await getCurrentCompany().then(data => data),
-        currentTruckCard = truck.closest('.transport__item'),
-        truckName = currentTruckCard.querySelector('.truck__name').textContent;
-        truckCardNumber = currentTruckCard.querySelector('.truck__number').textContent;
-        company.trucks = company.trucks.filter(el => el.name !== truckName && el.truckNumber !== truckCardNumber);
+    let company = await getCurrentCompany().then(data => data);
+    company[way] = company[way].filter(el => el.id !== id);
     
-    editCompany(company);
-    createTruckList();
+    let edit = await editCompany(company, way);
+    let create = await createFleetList();
   };
 } //CHECK
 
-async function addTruckToCompanyTruckList (truck) {
+async function addItemToCompany (item) {
   let company = await getCurrentCompany().then(data => data);
-  company.trucks.push(truck);
-  let payload = {
-    registerNumber: company.registerNumber,
-    trucks: company.trucks
-  }
+  let way = document.querySelector('.navbutton-active').textContent.toLowerCase();
 
-  let res = await fetch("http://localhost:3333/carrier", {
-    method: 'PATCH',
+  let res = fetch(`http://localhost:3333/carrier/${company.registerNumber}/${way}`, {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(item)
   })
-  return res
-  // fetch(`http://localhost:3333/carrier/${company.registerNumber}/trucks`, {
-  //   method: 'PUT',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify(truck)
-  // })
+  return res;
 
-}; //CHECK
+};
 
 //Orders
 
@@ -575,10 +765,11 @@ function hideAllTabs (elementsToHide, classToRemove) {
   })
 };
 
-function showOrderList (id) {
+function showBlock (id, classAdd) {
+  id = id.toLowerCase();
   let element = document.getElementById(`${id}`);
 
-  element.classList.add('active__orders-list');
+  element.classList.add(classAdd);
 };
 
 async function renderOrdersList () {
@@ -679,14 +870,14 @@ async function getUserFromServer(email, password) {
   let users = await response.json();
 
   return users.filter(el => el.email == email && el.password == password)[0];
-}
+};
 
 async function getCompanyById (id, type) {
   let response = await fetch(`http://localhost:3333/${type}`);
   let companies = await response.json();
 
   return companies.filter(el => el.id == id)[0];
-}
+};
   //Checkers
 
 
@@ -747,16 +938,19 @@ function createUser (user) {
   })
 };
 
-async function createID(type) {
-  let response = await fetch(`http://localhost:3333/${type}`);
+async function createID(way) {
+  let response = await fetch(`http://localhost:3333/${way}`);
   let companies = await response.json();
 
   return companies.length;
 };
 
-
-
-
+async function createIdForItem (item) {
+  let company = await getCurrentCompany().then(data => data);
+  let cid = company.id;
+  let id = `${cid}${company[item].length}`
+  return id;
+}
 
 function addUserToCompany (user, company) {
   company.users.push(user.id);
@@ -798,14 +992,19 @@ async function showActiveUser () {
 
 
 
-function editCompany (company) {
-  fetch ('http://localhost:3333/carrier', {
+async function editCompany (company, key) {
+  let url = 'http://localhost:3333/carrier';
+  if (key) url = `http://localhost:3333/carrier?key=${key}`;
+
+  let res = fetch (url, {
     method: 'PATCH',
     headers: {
       'Content-Type': "application/json"
     },
     body: JSON.stringify(company)
   })
+
+  return res;
 } //CHECK
 
 async function checkLoginUser (email, password) {
@@ -1024,7 +1223,7 @@ async function validateRegistration (e) {
         
         let shipperCompany;
         let checkCompany = await checkShipperInShippers(companyNumber).then(data => data);
-        console.log(checkCompany);
+        
 
         if (!checkCompany) {
           
