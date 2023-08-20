@@ -272,19 +272,19 @@ class Order {
 }
 
 class User {
-  constructor (firstName = '', lastName = '', phone, email, password, id) {
-    this.id = `USR${id}`
-    this.firstName = firstName,
-    this.lastName = lastName,
-    this.phone = phone,
-    this.email = email,
-    this.password = password,
-    this.companies = {
-      "carrier": [],
-      "shipper": [],
-      "admin": false,
-    },
-    this.settings = {}
+  constructor(firstName = "", lastName = "", phone, email, password, id) {
+    this.id = `USR${id}`;
+    (this.firstName = firstName),
+      (this.lastName = lastName),
+      (this.phone = phone),
+      (this.email = email),
+      (this.password = password),
+      (this.companies = {
+        carrier: [],
+        shipper: [],
+        admin: false,
+      }),
+      (this.settings = {});
   }
 }
 
@@ -297,7 +297,7 @@ class Truck {
     this.type = type,
     this.scoring = 'Unverified'
   }
-};
+}
 
 class Trailer {
   constructor (name, capacity, number, volume, type, id) {
@@ -309,7 +309,7 @@ class Trailer {
     this.volume = volume,
     this.scoring = 'Unverified'
   }
-};
+}
 
 class Driver {
   constructor (fname, lname, phone, dlicense, nationalID, id) {
@@ -321,7 +321,7 @@ class Driver {
     this.nationalID = nationalID,
     this.scoring = 'Unverified'
   }
-};
+}
 
 // let cities = ["Buenos Aires","Almirante Brown","Bahía Blanca","Caseros","Ezeiza","General San Martín","Junín","Lanús","La Plata","Lomas de Zamora","Luján","Mar del Plata","Merlo","Morón","Olivos","Pergamino","Quilmes","San Isidro","San Justo","San Nicolás de los Arroyos","Tandil","Tigre","Zárate","Catamarca","Catamarca","Chaco","Resistencia","Buenos Aires","Chubut","Comodoro Rivadavia","Rawson","Córdoba","Córdoba","Río Cuarto","San Francisco","Villa María","Corrientes","Corrientes","Entre Ríos","Concepción del Uruguay","Concordia","Gualeguaychú","Paraná","Formosa","Formosa","Jujuy","San Salvador de Jujuy","Mendoza","Godoy Cruz","Mendoza","San Rafael","Villa Nueva","Misiones","Posadas","Neuquén","Neuquén","La Pampa","Santa Rosa","La Rioja","La Rioja","Río Negro","San Carlos de Bariloche","Viedma","Salta","Salta","San Juan","San Juan","San Luis","Mercedes","San Luis","Santa Cruz","Río Gallegos","Santa Fe","Rosario","San Lorenzo","Santa Fe","Santiago del Estero","Santiago del Estero","Tierra del Fuego","Ushuaia","Tucumán","San Miguel de Tucumán"];
 // let type = ["TILT", "REF"];
@@ -351,8 +351,6 @@ class Driver {
 // }
 
 // console.log(generateOrders(cities, type, dates, temp, 100));
-
-
 
 //FUNCTIONS
 
@@ -630,12 +628,12 @@ function showEditForm (obj, type) {
   addButton.style.display = 'none';
 
   header.textContent = "Enter new info";
-};
+}
 
 function removeEditItem () {
   let allCards = document.querySelectorAll('.transport__item');
 
-  allCards.forEach(el => {
+  allCards.forEach((el) => {
     el.style.border = "";
     el.classList.remove('check');
   })
@@ -735,7 +733,7 @@ async function addItemToCompany (item) {
   let res = fetch(`http://localhost:3333/carrier/${company.registerNumber}/${way}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(item)
   })
@@ -746,24 +744,24 @@ async function addItemToCompany (item) {
 //Orders
 
 function tabActiveButton(button) {
-  button.classList.add('navbutton-active')
-};
+  button.classList.add("navbutton-active");
+}
 
-function removeClassFromTabButtons (elementsClass, activeClass) {
+function removeClassFromTabButtons(elementsClass, activeClass) {
   let buttons = document.querySelectorAll(`.${elementsClass}`);
-  
-  buttons.forEach(el => {
-    el.classList.remove(`${activeClass}`);
-  })
-};
 
-function hideAllTabs (elementsToHide, classToRemove) {
+  buttons.forEach((el) => {
+    el.classList.remove(`${activeClass}`);
+  });
+}
+
+function hideAllTabs(elementsToHide, classToRemove) {
   let tabs = document.querySelectorAll(`.${elementsToHide}`);
 
-  tabs.forEach(el => {
+  tabs.forEach((el) => {
     el.classList.remove(`${classToRemove}`);
-  })
-};
+  });
+}
 
 function showBlock (id, classAdd) {
   id = id.toLowerCase();
@@ -772,17 +770,17 @@ function showBlock (id, classAdd) {
   element.classList.add(classAdd);
 };
 
-async function renderOrdersList () {
-  let orders = await getOrdersFromServer().then(data => data);
-  let list = document.getElementById('Vacant');
+async function renderOrdersList() {
+  let orders = await getOrdersFromServer().then((data) => data);
+  let list = document.getElementById("Vacant");
 
-  orders.forEach(el => {
+  orders.forEach((el) => {
     list.append(createOrder(el));
-  })
+  });
 }
 
 function createOrder(obj) {
-  let li = document.createElement('li');
+  let li = document.createElement("li");
 
   li.innerHTML = `<li class="order__cart">
   <div class="order__description order__id">${obj.id}</div>
@@ -800,79 +798,78 @@ function createOrder(obj) {
     <div class="order__dash"></div>
     <div class="order__description order__unload-date">${obj.arrivalDate}</div>
   </div>
-  <div class="order__description order__price">${obj['carrier']['financeCarrier']['price']}$</div>
+  <div class="order__description order__price">${obj["carrier"]["financeCarrier"]["price"]}$</div>
   <div class="order__buttons">
     <button class="order__pick-up-button">More info</button>
   </div>
 </li>`;
-return li;
+  return li;
 }
 
 // Clent <----> Server data functions
 
+//Getters
 
-  //Getters
-
-async function getCarriersFromServer () {
-  let response = await fetch("http://localhost:3333/carrier")
+async function getCarriersFromServer() {
+  let response = await fetch("http://localhost:3333/carrier");
   let carriers = await response.json();
   return carriers;
-};
+}
 
-async function getShippersFromServer () {
-  let response = await fetch("http://localhost:3333/shipper")
+async function getShippersFromServer() {
+  let response = await fetch("http://localhost:3333/shipper");
   let shippers = await response.json();
   return shippers;
-};
+}
 
-async function getUsersFromServer () {
-  let response = await fetch("http://localhost:3333/user")
+async function getUsersFromServer() {
+  let response = await fetch("http://localhost:3333/user");
   let users = await response.json();
   return users;
-};
+}
 
-async function getOrdersFromServer () {
-  let response = await fetch("http://localhost:3333/orders")
+async function getOrdersFromServer() {
+  let response = await fetch("http://localhost:3333/orders");
   let orders = await response.json();
   return orders;
 }
 
 async function getCurrentUser() {
-  let email = getLoginedInfo('user');
-  let users = await getUsersFromServer().then(data => data);
-  
-  return users.filter(el => el.email == email)[0];
+  let email = getLoginedInfo("user");
+  let users = await getUsersFromServer().then((data) => data);
+
+  return users.filter((el) => el.email == email)[0];
 }
 
 async function getCurrentCompany() {
-  let regNumber = getLoginedInfo('company');
-  let companyType = getLoginedInfo('role');
+  let regNumber = getLoginedInfo("company");
+  let companyType = getLoginedInfo("role");
   let companies;
 
-  if (companyType == 'shipper') {
+  if (companyType == "shipper") {
     companies = await getShippersFromServer().then((data) => data);
   } else {
     companies = await getCarriersFromServer().then((data) => data);
   }
 
-  return companies.filter(el => el.registerNumber == regNumber)[0];
-};
+  return companies.filter((el) => el.registerNumber == regNumber)[0];
+}
 
-async function getCompanyByNumber (number, type) {
+async function getCompanyByNumber(number, type) {
   let response = await fetch(`http://localhost:3333/${type}`);
   let companies = await response.json();
 
-  return companies.filter(el => el.registerNumber == number)[0];
-};
+  return companies.filter((el) => el.registerNumber == number)[0];
+}
 
 async function getUserFromServer(email, password) {
-  let response = await fetch("http://localhost:3333/user")
+  let response = await fetch("http://localhost:3333/user");
   let users = await response.json();
 
   return users.filter(el => el.email == email && el.password == password)[0];
 };
 
-async function getCompanyById (id, type) {
+async function getCompanyById(id, type) {
   let response = await fetch(`http://localhost:3333/${type}`);
   let companies = await response.json();
 
@@ -880,63 +877,62 @@ async function getCompanyById (id, type) {
 };
   //Checkers
 
-
-async function checkCarrierInCarriers (company) {
-  let companies = await getCarriersFromServer().then(data => data);
-  let res = companies.some(el => el.registerNumber == company.registerNumber);
+async function checkCarrierInCarriers(company) {
+  let companies = await getCarriersFromServer().then((data) => data);
+  let res = companies.some((el) => el.registerNumber == company.registerNumber);
   return res;
-};
+}
 
-async function checkShipperInShippers (company) {
-  let companies = await getShippersFromServer().then(data => data);
-  let res = companies.some(el => el.registerNumber == company.registerNumber);
+async function checkShipperInShippers(company) {
+  let companies = await getShippersFromServer().then((data) => data);
+  let res = companies.some((el) => el.registerNumber == company.registerNumber);
   return res;
-};
+}
 
-function checkUserInCompany (company, email) {
+function checkUserInCompany(company, email) {
   let users = company.users;
-  let res = users.some(el => el.email == email);
+  let res = users.some((el) => el.email == email);
 
   return res;
-};
+}
 
-async function checkUserInUsers (user) {
-  let users = await getUsersFromServer().then(data => data);
-  let res = users.some(el => el.email == user.email);  
+async function checkUserInUsers(user) {
+  let users = await getUsersFromServer().then((data) => data);
+  let res = users.some((el) => el.email == user.email);
   return res;
-};
+}
 
-  //Creators
+//Creators
 
-function createCarrier (company) {
-  fetch ('http://localhost:3333/carrier', {
-    method: 'POST',
+function createCarrier(company) {
+  fetch("http://localhost:3333/carrier", {
+    method: "POST",
     headers: {
-      'Content-Type': "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(company)
-  })
-};
+    body: JSON.stringify(company),
+  });
+}
 
-function createShipper (company) {
-  fetch ('http://localhost:3333/shipper', {
-    method: 'POST',
+function createShipper(company) {
+  fetch("http://localhost:3333/shipper", {
+    method: "POST",
     headers: {
-      'Content-Type': "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(company)
-  })
-};
+    body: JSON.stringify(company),
+  });
+}
 
-function createUser (user) {
-  fetch ('http://localhost:3333/user', {
-    method: 'POST',
+function createUser(user) {
+  fetch("http://localhost:3333/user", {
+    method: "POST",
     headers: {
-      'Content-Type': "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(user)
-  })
-};
+    body: JSON.stringify(user),
+  });
+}
 
 async function createID(way) {
   let response = await fetch(`http://localhost:3333/${way}`);
@@ -954,37 +950,32 @@ async function createIdForItem (item) {
 
 function addUserToCompany (user, company) {
   company.users.push(user.id);
-};
-
+}
 
 //LocalStorage
 
+function recordLoginUser(email, companyNumber, role) {
+  let login = [email, companyNumber, role];
 
-function recordLoginUser (email, companyNumber, role) {
-  let login = [email, companyNumber, role]
-
-  localStorage.setItem('loginSession', JSON.stringify(login));
-};
-
-function logOut () {
-  localStorage.removeItem('loginSession');
-};
-
-function getLoginedInfo (type) {
-  let info = JSON.parse(localStorage.getItem('loginSession'));
-
-  if (type == 'user') return info[0];
-  if (type == 'company') return info[1];
-  if (type == 'role') return info[2];
+  localStorage.setItem("loginSession", JSON.stringify(login));
 }
 
+function logOut() {
+  localStorage.removeItem("loginSession");
+}
 
+function getLoginedInfo(type) {
+  let info = JSON.parse(localStorage.getItem("loginSession"));
 
+  if (type == "user") return info[0];
+  if (type == "company") return info[1];
+  if (type == "role") return info[2];
+}
 
-async function showActiveUser () {
-  let user = await getCurrentUser().then(data => data);
-  
-  let userLabel = document.getElementById('user');
+async function showActiveUser() {
+  let user = await getCurrentUser().then((data) => data);
+
+  let userLabel = document.getElementById("user");
 
   userLabel.textContent = `${user.firstName} ${user.lastName}`;
 }
@@ -999,7 +990,7 @@ async function editCompany (company, key) {
   let res = fetch (url, {
     method: 'PATCH',
     headers: {
-      'Content-Type': "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(company)
   })
@@ -1007,77 +998,80 @@ async function editCompany (company, key) {
   return res;
 } //CHECK
 
-async function checkLoginUser (email, password) {
-  let user = await getUserFromServer(email, password).then(data => data);
-  let role = document.querySelector('.navbutton-active').textContent.toLowerCase();
+async function checkLoginUser(email, password) {
+  let user = await getUserFromServer(email, password).then((data) => data);
+  let role = document
+    .querySelector(".navbutton-active")
+    .textContent.toLowerCase();
   let company;
   let id;
 
   if (user) {
     logOut();
-    if (role == 'shipper') {
+    if (role == "shipper") {
       id = user.companies.shipper[0];
-      company = await getCompanyById(id, role).then(data => data);
+      company = await getCompanyById(id, role).then((data) => data);
       recordLoginUser(email, company.registerNumber, role);
-      redirect('../shippers/');
+      redirect("../shippers/");
     } else {
       id = user.companies.carrier[0];
-      company = await getCompanyById(id, role).then(data => data);
+      company = await getCompanyById(id, role).then((data) => data);
       recordLoginUser(email, company.registerNumber, role);
-      redirect('../orders/');
+      redirect("../orders/");
     }
   } else {
     alert("Invalid email or password");
   }
 } // CHECK
 
-
-function redirect (link) {
+function redirect(link) {
   window.location.href = `${link}`;
 }
 
-function setUserRole (user, role) {
-
-}
-
+function setUserRole(user, role) {}
 
 //Validators
 
-function validateStr (name, id) {
+function validateStr(name, id) {
+  let errors = "";
 
-  let errors = '';
-
-  if (checkNumber(name) || checkSymbol(name)) errors += "Name shouldn't contains any number or symbol. ";
-  if (name.length <= 2) errors += "Length shoud be more than 2 letters. "
-  
-  message (errors, id);  
-};
-
-function validateEmail (email, id) {
-  let errors = '';
-
-  if (email.split('').filter(e => e == '@' || e == '.').length == 0) errors = "Incorrect email";
-  if (email.length < 6) errors = "Incorrect email";
-
-  message (errors, id)  
-};
-
-function validatePhone (tel, id) {
-  let errors = '';
-  let numbers = '01234567890';
-
-  if (tel.split('').filter(e => numbers.includes(e)).length !== tel.length || tel.length == 0 || tel.length > 10) errors += "Incorrect number";
+  if (checkNumber(name) || checkSymbol(name))
+    errors += "Name shouldn't contains any number or symbol. ";
+  if (name.length <= 2) errors += "Length shoud be more than 2 letters. ";
 
   message(errors, id);
-};
+}
 
-function validatePassword (password) {
+function validateEmail(email, id) {
+  let errors = "";
 
-  let bigLetter = document.querySelector('.big-letter'),
-      length = document.querySelector('.length'),
-      number = document.querySelector('.number'),
-      symbol = document.querySelector('.symbols');
-  
+  if (email.split("").filter((e) => e == "@" || e == ".").length == 0)
+    errors = "Incorrect email";
+  if (email.length < 6) errors = "Incorrect email";
+
+  message(errors, id);
+}
+
+function validatePhone(tel, id) {
+  let errors = "";
+  let numbers = "01234567890";
+
+  if (
+    tel.split("").filter((e) => numbers.includes(e)).length !== tel.length ||
+    tel.length == 0 ||
+    tel.length > 10
+  )
+    errors += "Incorrect number";
+
+  message(errors, id);
+}
+
+function validatePassword(password) {
+  let bigLetter = document.querySelector(".big-letter"),
+    length = document.querySelector(".length"),
+    number = document.querySelector(".number"),
+    symbol = document.querySelector(".symbols");
+
   // if (!password) {
   //   message('This field is required', 'password');
   //   bigLetter.style.color = 'black';
@@ -1087,50 +1081,53 @@ function validatePassword (password) {
   // };
 
   if (password.toLowerCase() == password) {
-    bigLetter.style.color = 'red';
-    bigLetter.classList.add('active');
+    bigLetter.style.color = "red";
+    bigLetter.classList.add("active");
   } else {
-    bigLetter.style.color = 'green';
-    bigLetter.classList.remove('active');
+    bigLetter.style.color = "green";
+    bigLetter.classList.remove("active");
   }
-  
-  if (!checkSymbol(password)) {
-    symbol.style.color = 'red';
-    symbol.classList.add('active');
-  } else {
-    symbol.style.color = 'green';
-    symbol.classList.remove('active');
-  }
-  
-  if (password.length < 8) {
-    length.style.color = 'red';
-    length.classList.add('active');
-  } else {
-    length.style.color = 'green';
-    length.classList.remove('active');
-  }
-  
-  if (!checkNumber(password)) {
-    number.style.color = 'red';
-    number.classList.add('active');
-  } else {
-    number.style.color = 'green';
-    number.classList.remove('active');
-  }
-};
 
-function message (errors, id) {
-  const LABEL = document.querySelector(`#${id}`).closest('.form__group').querySelector('.form__error-label');
+  if (!checkSymbol(password)) {
+    symbol.style.color = "red";
+    symbol.classList.add("active");
+  } else {
+    symbol.style.color = "green";
+    symbol.classList.remove("active");
+  }
+
+  if (password.length < 8) {
+    length.style.color = "red";
+    length.classList.add("active");
+  } else {
+    length.style.color = "green";
+    length.classList.remove("active");
+  }
+
+  if (!checkNumber(password)) {
+    number.style.color = "red";
+    number.classList.add("active");
+  } else {
+    number.style.color = "green";
+    number.classList.remove("active");
+  }
+}
+
+function message(errors, id) {
+  const LABEL = document
+    .querySelector(`#${id}`)
+    .closest(".form__group")
+    .querySelector(".form__error-label");
 
   LABEL.textContent = errors;
 
   if (errors.length > 0) {
-    if(!LABEL.classList.contains('active')) {
-      LABEL.classList.add('active');
+    if (!LABEL.classList.contains("active")) {
+      LABEL.classList.add("active");
     }
   } else {
-    if(LABEL.classList.contains('active')) {
-      LABEL.classList.remove('active');
+    if (LABEL.classList.contains("active")) {
+      LABEL.classList.remove("active");
     }
   }
 }
@@ -1143,29 +1140,28 @@ function checkErrors(form) {
   return false;
 }
 
-function checkNumber (str) {
-  let numbers = '01234567890';
+function checkNumber(str) {
+  let numbers = "01234567890";
 
-  return str.split('').filter(el => numbers.includes(el)).length > 0;
+  return str.split("").filter((el) => numbers.includes(el)).length > 0;
 }
 
-function checkSymbol (str) {
-  let symbols = '!#@$%^&*()_-+=§<>?/,.\|';
+function checkSymbol(str) {
+  let symbols = "!#@$%^&*()_-+=§<>?/,.|";
 
-  return str.split('').filter(el => symbols.includes(el)).length > 0;
+  return str.split("").filter((el) => symbols.includes(el)).length > 0;
 }
 
-function validateLogin (e) {
+function validateLogin(e) {
   e.preventDefault();
-  
-  let email = document.getElementById('email').value ,
-      password = document.getElementById('password').value;
 
-      checkLoginUser(email, password);
-};
+  let email = document.getElementById("email").value,
+    password = document.getElementById("password").value;
 
-async function validateRegistration (e) {
+  checkLoginUser(email, password);
+}
 
+async function validateRegistration(e) {
   e.preventDefault();
   
   let email = document.getElementById('email').value ,
