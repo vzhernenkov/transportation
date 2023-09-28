@@ -803,6 +803,7 @@ function createOrder(obj) {
     <button class="order__pick-up-button">More info</button>
   </div>
 </li>`;
+
   return li;
 }
 
