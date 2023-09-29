@@ -24,7 +24,7 @@ September sprint:
 October:
 
 1) Refactoring for module system (css block)
-2) Implementation React for better optimization and user experience
+2) Implementate React for better optimization and user experience
 
 November:
 
